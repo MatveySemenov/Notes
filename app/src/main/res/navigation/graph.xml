@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/graph"
+    app:startDestination="@id/loading_app">
+    <fragment
+        android:id="@+id/loading_app"
+        android:name="com.example.notes.Fragments.loading_app"
+        android:label="loading_app"
+        tools:layout="@layout/loading_app" >
+        <action
+            android:id="@+id/action_loading_app_to_sign_in"
+            app:destination="@id/sign_in" />
+        <action
+            android:id="@+id/action_loading_app_to_notes_book"
+            app:destination="@id/notes_book" />
+    </fragment>
+    <fragment
+        android:id="@+id/sign_in"
+        android:name="com.example.notes.Fragments.sign_in"
+        android:label="sign_in"
+        tools:layout="@layout/sign_in" >
+        <action
+            android:id="@+id/action_sign_in_to_sign_up"
+            app:destination="@id/sign_up" />
+        <action
+            android:id="@+id/action_sign_in_to_notes_book"
+            app:destination="@id/notes_book" />
+    </fragment>
+    <fragment
+        android:id="@+id/sign_up"
+        android:name="com.example.notes.Fragments.sign_up"
+        android:label="sign_up"
+        tools:layout="@layout/sign_up" >
+        <action
+            android:id="@+id/action_sign_up_to_sign_in"
+            app:destination="@id/sign_in" />
+        <action
+            android:id="@+id/action_sign_up_to_notes_book"
+            app:destination="@id/notes_book" />
+    </fragment>
+    <activity
+        android:id="@+id/notes_book"
+        android:name="com.example.notes.notes_book"
+        android:label="notes_book"
+        tools:layout="@layout/notes_book" />
+</navigation>
