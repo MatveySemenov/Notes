@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Notes/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.205" />
+        <entry key="..\:/Notes/app/src/main/res/drawable/ic_launcher_background.xml" value="0.205" />
         <entry key="..\:/Notes/app/src/main/res/layout-land/add_notes.xml" value="0.264" />
         <entry key="..\:/Notes/app/src/main/res/layout-land/loading_app.xml" value="0.264" />
         <entry key="..\:/Notes/app/src/main/res/layout-land/notes_book.xml" value="0.264" />
@@ -10,12 +12,16 @@
         <entry key="..\:/Notes/app/src/main/res/layout-land/sign_up.xml" value="0.264" />
         <entry key="..\:/Notes/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Notes/app/src/main/res/layout/add_notes.xml" value="0.1" />
-        <entry key="..\:/Notes/app/src/main/res/layout/list_for_item.xml" value="0.22992700729927007" />
+        <entry key="..\:/Notes/app/src/main/res/layout/list_for_item.xml" value="0.1" />
         <entry key="..\:/Notes/app/src/main/res/layout/loading_ap.xml" value="0.23278985507246377" />
         <entry key="..\:/Notes/app/src/main/res/layout/loading_app.xml" value="0.264" />
-        <entry key="..\:/Notes/app/src/main/res/layout/notes_book.xml" value="0.264" />
+        <entry key="..\:/Notes/app/src/main/res/layout/menu.xml" value="0.24114583333333334" />
+        <entry key="..\:/Notes/app/src/main/res/layout/notes_book.xml" value="0.2" />
         <entry key="..\:/Notes/app/src/main/res/layout/sign_in.xml" value="0.264" />
         <entry key="..\:/Notes/app/src/main/res/layout/sign_up.xml" value="0.264" />
+        <entry key="..\:/Notes/app/src/main/res/menu/menu_color.xml" value="0.2421875" />
+        <entry key="..\:/Notes/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.205" />
+        <entry key="..\:/Notes/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.205" />
       </map>
     </option>
   </component>

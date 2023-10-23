@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -20,8 +21,10 @@ import com.example.notes.Adaptor.NotesAdaptor
 import com.example.notes.DataBase.EntityDataBase
 import com.example.notes.DataBase.NotesDataBase
 import com.example.notes.DataBase.NotesViewModel
+import com.example.notes.Fragments.sign_in
 import com.example.notes.R
 import com.example.notes.databinding.NotesBookBinding
+import com.example.notes.databinding.SignInBinding
 import com.example.notes.databinding.SignUpBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -57,6 +60,7 @@ class notes_book : AppCompatActivity(), NotesAdaptor.NoteClickListener{
 
         initUI()
 
+
         viewModel = ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(application)
@@ -71,6 +75,7 @@ class notes_book : AppCompatActivity(), NotesAdaptor.NoteClickListener{
     }
 
     private fun initUI(){
+
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
@@ -91,6 +96,7 @@ class notes_book : AppCompatActivity(), NotesAdaptor.NoteClickListener{
             val intent = Intent(this, add_notes::class.java)
             getContent.launch(intent)
         }
+
     }
 
     private val UpdateOrDeleteNote =

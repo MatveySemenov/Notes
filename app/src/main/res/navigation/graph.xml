@@ -40,9 +40,10 @@
             android:id="@+id/action_sign_up_to_notes_book"
             app:destination="@id/notes_book" />
     </fragment>
+
     <activity
         android:id="@+id/notes_book"
         android:name="com.example.notes.notes_book"
         android:label="notes_book"
-        tools:layout="@layout/notes_book" />
+        tools:layout="@layout/notes_book"/>
 </navigation>
