@@ -3,7 +3,8 @@
 
     <!-- text variables used -->
     <string name="sign_in">Вход</string>
-    <string name="enter_your_email">Введите логин</string>
+    <string name="name">Введите имя</string>
+    <string name="enter_your_email">Введите почту</string>
     <string name="enter_your_password">Введите пароль</string>
     <string name="not_registredet">Не зарегистрирован?</string>
     <string name="sign_up">Регистрация</string>

@@ -39,6 +39,8 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-database:19.2.1'
+
 
     //для работы с бд
     def room_version = "2.5.1"
