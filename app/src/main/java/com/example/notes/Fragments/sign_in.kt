@@ -83,7 +83,7 @@ class sign_in() : Fragment(){
             val email = binding.emailIn.text.toString()
             val password = binding.passwordIn.text.toString()
             ProgressBar = binding.progressBarSignIn!!
-            
+
             if(email.isNotEmpty() && password.isNotEmpty()){
                 Autentification(email,password)
                 ProgressBar.visibility = View.VISIBLE

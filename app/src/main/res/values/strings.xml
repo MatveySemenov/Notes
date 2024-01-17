@@ -13,6 +13,14 @@
     <string name="title">Заголовок</string>
     <string name="text">текст</string>
     <string name="data_creation">дата создания</string>
+
+    <string name="nav_notes">Заметки</string>
+    <string name="nav_archives">Архив</string>
+    <string name="nav_trash">Корзина</string>
+    <string name="nav_settings">Настройки</string>
+    <string name="nav_about">О приложении</string>
+    <string name="nav_exit">Выход</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

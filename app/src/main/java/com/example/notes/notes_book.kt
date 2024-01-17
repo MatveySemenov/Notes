@@ -13,6 +13,8 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -50,16 +52,12 @@ class notes_book : AppCompatActivity(), NotesAdaptor.NoteClickListener{
         }
     }
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = NotesBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initUI()
-
 
         viewModel = ViewModelProvider(
             this,

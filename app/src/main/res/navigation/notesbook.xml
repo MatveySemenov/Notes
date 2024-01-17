@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/notesbook"
+    app:startDestination="@id/notes_book2">
+
+    <activity
+        android:id="@+id/notes_book2"
+        android:name="com.example.notes.notes_book"
+        android:label="notes_book"
+        tools:layout="@layout/notes_book" />
+</navigation>
