@@ -10,4 +10,9 @@
         android:name="com.example.notes.notes_book"
         android:label="notes_book"
         tools:layout="@layout/notes_book" />
+    <activity
+        android:id="@+id/nav_archives2"
+        android:name="com.example.notes.webpage.nav_archives"
+        android:label="activity_nav_archives"
+        tools:layout="@layout/activity_nav_archives" />
 </navigation>

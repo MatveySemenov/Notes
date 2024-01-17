@@ -1,15 +1,15 @@
 package com.example.notes
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.notes.databinding.ActivityDashboardBinding
-import com.example.notes.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationView
 
 class DashboardActivity : AppCompatActivity() {
@@ -28,11 +28,11 @@ class DashboardActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
 
-        if (savedInstanceState == null){
-            val navController = findNavController(R.id.nav_host_fragment_content_main)
+        if (savedInstanceState == null) {
+            val navController = findNavController(R.id.nav_bar)
             appBarConfiguration = AppBarConfiguration(
                 setOf(
-                    R.id.notes_book
+                    R.id.notesbook
                 ), drawerLayout
             )
 
@@ -44,8 +44,8 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     // Обработка нажатия на кнопку "вверх"
-    override fun onSupportNavigateUp():Boolean{
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_bar)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }
