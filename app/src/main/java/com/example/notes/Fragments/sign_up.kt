@@ -99,12 +99,12 @@ class sign_up : Fragment(){
     private fun registrationUser(email: String, password: String){
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if(it.isSuccessful){
-                ProgressBar.visibility = View.GONE
                 navController.navigate(R.id.action_sign_up_to_notes_book)
             }
             else{
                 Toast.makeText(context, "Пользователь уже имеется с такими данными", Toast.LENGTH_SHORT).show()
             }
+            ProgressBar.visibility = View.GONE
         }
     }
 
