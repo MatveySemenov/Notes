@@ -19,5 +19,4 @@ interface DaoNotes {
     //Обновление таблицы
     @Query("UPDATE notes_table set title= :title, note = :note, date = :date where id = :id")
     suspend fun update(id: Int?, title: String?, note: String?,date: String)
-
 }

@@ -22,7 +22,6 @@ class loading_app : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.loading_app, container, false)
     }
 
@@ -36,7 +35,7 @@ class loading_app : Fragment(){
         val handler = Handler(Looper.myLooper()!!)
         handler.postDelayed({
             if (isLogin){
-                navController.navigate(R.id.action_loading_app_to_notes_book)
+              navController.navigate(R.id.action_loading_app_to_notes_book)
             }
             else{
                 navController.navigate(R.id.action_loading_app_to_sign_in)

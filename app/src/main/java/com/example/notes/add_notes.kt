@@ -52,7 +52,6 @@ class add_notes : AppCompatActivity(){
             val title = binding.etTitle.text.toString()
             val noteText = binding.etNote.text.toString()
 
-
             if(title.isNotEmpty() || noteText.isNotEmpty()){
                 val data = SimpleDateFormat("EEE, d MMM yyyy HH:mm a")
 
