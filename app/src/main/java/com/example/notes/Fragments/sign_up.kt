@@ -15,9 +15,12 @@ import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import com.example.notes.ListUser.User
 import com.example.notes.R
 import com.example.notes.databinding.SignUpBinding
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class sign_up : Fragment(){
 
@@ -75,11 +78,11 @@ class sign_up : Fragment(){
             val password = binding.passwordUp.text.toString()
             val verifyPassword = binding.verifyPasswordUp.text.toString()
             val name = binding.NameUp.text.toString()
-            ProgressBar = binding.progressBar?: return@setOnClickListener
+            ProgressBar = binding.progressBar
             
             if(email.isNotEmpty() && password.isNotEmpty() && verifyPassword.isNotEmpty() && name.isNotEmpty()){
                 if(password == verifyPassword){
-                    registrationUser(email, password)
+                    registrationUser(name,email, password)
                     ProgressBar.visibility = View.VISIBLE
                 }
                 else{
@@ -96,10 +99,21 @@ class sign_up : Fragment(){
         }
     }
 
-    private fun registrationUser(email: String, password: String){
+    private fun registrationUser(name:String,email: String, password: String){
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if(it.isSuccessful){
-                navController.navigate(R.id.action_sign_up_to_notes_book)
+                val user = User(userName = name, userPassword = password, userEmail = email)
+
+                FirebaseDatabase.getInstance().getReference("Users")
+                    .child(FirebaseAuth.getInstance().currentUser?.uid!!)
+                    .setValue(user)
+                    .addOnCompleteListener(OnCompleteListener<Void> { task ->
+                        if (task.isSuccessful) {
+                            navController.navigate(R.id.action_sign_up_to_notes_book)
+                        } else {
+                            Toast.makeText(context, "Возникла ошибка", Toast.LENGTH_SHORT).show()
+                        }
+                    })
             }
             else{
                 Toast.makeText(context, "Пользователь уже имеется с такими данными", Toast.LENGTH_SHORT).show()
