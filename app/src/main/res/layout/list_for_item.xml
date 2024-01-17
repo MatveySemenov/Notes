@@ -50,18 +50,6 @@
 
         <TextView
             android:background="#F1EDE1"
-            android:id="@+id/polzovatel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="10"
-            android:padding="8dp"
-            android:textStyle="normal"
-            android:text="@string/text"
-            android:textColor="@color/black"
-            android:textSize="16sp"/>
-
-        <TextView
-            android:background="#F1EDE1"
             android:gravity="center"
             android:id="@+id/list_date"
             android:layout_width="match_parent"
