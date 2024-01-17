@@ -25,20 +25,33 @@
         <entry key="..\:/Notes/app/src/main/res/menu/menu_color.xml" value="0.2421875" />
         <entry key="..\:/Notes/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.205" />
         <entry key="..\:/Notes/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.205" />
+        <entry key="..\:/project for moobile/Notes/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/project for moobile/Notes/app/src/main/res/drawable/ic_baseline_exit_to_app_24.xml" value="0.1" />
+        <entry key="..\:/project for moobile/Notes/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.165" />
+        <entry key="..\:/project for moobile/Notes/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/project for moobile/Notes/app/src/main/res/drawable/ic_outline_book_24.xml" value="0.165" />
+        <entry key="..\:/project for moobile/Notes/app/src/main/res/drawable/ic_round_exit_to_app_24.xml" value="0.165" />
         <entry key="..\:/project for moobile/Notes/app/src/main/res/layout-land/add_notes.xml" value="0.20502645502645503" />
         <entry key="..\:/project for moobile/Notes/app/src/main/res/layout-land/loading_app.xml" value="0.20502645502645503" />
         <entry key="..\:/project for moobile/Notes/app/src/main/res/layout-land/notes_book.xml" value="0.20502645502645503" />
         <entry key="..\:/project for moobile/Notes/app/src/main/res/layout-land/sign_up.xml" value="0.264" />
+        <entry key="..\:/project for moobile/Notes/app/src/main/res/layout/activity_dashboard.xml" value="0.1" />
         <entry key="..\:/project for moobile/Notes/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/project for moobile/Notes/app/src/main/res/layout/activity_nav_archives.xml" value="0.1" />
         <entry key="..\:/project for moobile/Notes/app/src/main/res/layout/activity_splash_animation.xml" value="0.1" />
         <entry key="..\:/project for moobile/Notes/app/src/main/res/layout/add_notes.xml" value="0.2421875" />
+        <entry key="..\:/project for moobile/Notes/app/src/main/res/layout/app_bar_main.xml" value="0.1" />
+        <entry key="..\:/project for moobile/Notes/app/src/main/res/layout/content_layout.xml" value="0.16" />
+        <entry key="..\:/project for moobile/Notes/app/src/main/res/layout/content_main.xml" value="0.12260536398467432" />
         <entry key="..\:/project for moobile/Notes/app/src/main/res/layout/list_for_item.xml" value="0.2421875" />
         <entry key="..\:/project for moobile/Notes/app/src/main/res/layout/loading_app.xml" value="0.176" />
-        <entry key="..\:/project for moobile/Notes/app/src/main/res/layout/nav_header_main.xml" value="0.2" />
+        <entry key="..\:/project for moobile/Notes/app/src/main/res/layout/nav_header_main.xml" value="0.3683241252302026" />
         <entry key="..\:/project for moobile/Notes/app/src/main/res/layout/notes_book.xml" value="0.1" />
         <entry key="..\:/project for moobile/Notes/app/src/main/res/layout/sign_in.xml" value="0.21829710144927536" />
         <entry key="..\:/project for moobile/Notes/app/src/main/res/layout/sign_up.xml" value="0.2" />
+        <entry key="..\:/project for moobile/Notes/app/src/main/res/menu/activity_main_drawer.xml" value="0.4" />
         <entry key="..\:/project for moobile/Notes/app/src/main/res/menu/activy_main_drawer.xml" value="0.2" />
+        <entry key="..\:/project for moobile/Notes/app/src/main/res/menu/main_drawer_menu.xml" value="0.2" />
       </map>
     </option>
   </component>

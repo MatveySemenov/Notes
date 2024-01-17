@@ -50,9 +50,7 @@ class notes_book : AppCompatActivity(), NotesAdaptor.NoteClickListener{
         }
     }
 
-
-
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = NotesBookBinding.inflate(layoutInflater)
