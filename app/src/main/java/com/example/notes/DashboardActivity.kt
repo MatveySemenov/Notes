@@ -15,6 +15,7 @@ import com.google.android.material.navigation.NavigationView
 class DashboardActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDashboardBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
@@ -28,11 +29,12 @@ class DashboardActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.notes_book
+                R.id.notes_book,
+                R.id.nav_archives
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
