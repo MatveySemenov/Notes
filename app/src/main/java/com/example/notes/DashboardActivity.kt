@@ -31,7 +31,11 @@ class DashboardActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.notes_book,
-                R.id.nav_archives
+                R.id.nav_archives,
+                R.id.nav_trash,
+                R.id.nav_settings,
+                R.id.nav_about,
+                R.id.nav_exit
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

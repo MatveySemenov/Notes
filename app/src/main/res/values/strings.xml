@@ -15,12 +15,17 @@
     <string name="data_creation">дата создания</string>
 
 
+    <!-- menu -->
     <string name="nav_notes">Заметки</string>
     <string name="nav_archives">Архив</string>
     <string name="nav_trash">Корзина</string>
     <string name="nav_settings">Настройки</string>
     <string name="nav_about">О приложении</string>
     <string name="nav_exit">Выход</string>
+
+    <!-- About -->
+    <string name="about_version_app">Версия 0.0.1</string>
+    <string name="about_avtor_app">Разработчик: Motya Studio</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
