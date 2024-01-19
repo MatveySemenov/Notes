@@ -27,6 +27,7 @@ class DashboardActivity : AppCompatActivity() {
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
+        //фрагменты для которых мы показываем боковое меню
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.notes_book,
@@ -34,7 +35,24 @@ class DashboardActivity : AppCompatActivity() {
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
 
+        //фрагменты для которых не показываем боковое меню
+        navController.addOnDestinationChangedListener{_,destination,_ ->
+            if (destination.id in setOf(
+                    R.id.loading_app,
+                    R.id.sign_in,
+                    R.id.sign_up
+                )
+            ){
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                supportActionBar?.hide()
+            }else{
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                supportActionBar?.show()
+            }
+
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
