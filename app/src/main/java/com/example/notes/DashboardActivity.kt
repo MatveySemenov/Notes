@@ -1,15 +1,19 @@
 package com.example.notes
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.notes.UI.about.nav_about
 import com.example.notes.databinding.ActivityDashboardBinding
 import com.example.notes.databinding.ActivityMainBinding
+import com.example.notes.databinding.NavAboutBinding
 import com.google.android.material.navigation.NavigationView
 
 class DashboardActivity : AppCompatActivity() {
@@ -55,8 +59,21 @@ class DashboardActivity : AppCompatActivity() {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                 supportActionBar?.show()
             }
-
         }
+
+        navView.setNavigationItemSelectedListener { menuItem ->
+            when(menuItem.itemId){
+                // Обработчик нажатия на элемент меню "О приложении"
+                R.id.nav_about -> {
+                    startActivity(Intent(this,nav_about::class.java))
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    return@setNavigationItemSelectedListener true
+                }
+
+            }
+            false
+        }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

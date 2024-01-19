@@ -23,6 +23,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".UI.about.nav_about"
+            android:exported="false"/>
+        <activity
             android:name=".add_notes"
             android:exported="false" />
         <activity
