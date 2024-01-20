@@ -3,7 +3,6 @@ package com.example.notes
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.Preference
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -11,11 +10,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.notes.Fragments.loading_app
 import com.example.notes.UI.about.nav_about
 import com.example.notes.databinding.ActivityDashboardBinding
-import com.example.notes.databinding.ActivityMainBinding
-import com.example.notes.databinding.NavAboutBinding
 import com.google.android.material.navigation.NavigationView
 
 class DashboardActivity : AppCompatActivity() {

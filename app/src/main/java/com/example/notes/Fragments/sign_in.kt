@@ -8,17 +8,11 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ProgressBar
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.text.isDigitsOnly
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import com.example.notes.R
-import com.example.notes.databinding.ActivityMainBinding
 import com.example.notes.databinding.SignInBinding
 import com.google.firebase.auth.FirebaseAuth
 

@@ -1,11 +1,9 @@
 package com.example.notes.Fragments
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
