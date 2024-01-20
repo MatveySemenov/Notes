@@ -22,12 +22,12 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-class sign_up : Fragment(){
+class sign_up : Fragment() {
 
     private lateinit var navController: NavController
     private lateinit var mAuth: FirebaseAuth
     private lateinit var binding: SignUpBinding
-    private lateinit var ProgressBar:ProgressBar
+    private lateinit var ProgressBar: ProgressBar
 
     private var doubleBackToExitPressedOnce = false
 
@@ -35,7 +35,7 @@ class sign_up : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = SignUpBinding.inflate(inflater,container,false)
+        binding = SignUpBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -79,17 +79,15 @@ class sign_up : Fragment(){
             val verifyPassword = binding.verifyPasswordUp.text.toString()
             val name = binding.NameUp.text.toString()
             ProgressBar = binding.progressBar
-            
-            if(email.isNotEmpty() && password.isNotEmpty() && verifyPassword.isNotEmpty() && name.isNotEmpty()){
-                if(password == verifyPassword){
-                    registrationUser(name,email, password)
+
+            if (email.isNotEmpty() && password.isNotEmpty() && verifyPassword.isNotEmpty() && name.isNotEmpty()) {
+                if (password == verifyPassword) {
+                    registrationUser(name, email, password)
                     ProgressBar.visibility = View.VISIBLE
+                } else {
+                    Toast.makeText(context, "Пароли не сходятся", Toast.LENGTH_SHORT).show()
                 }
-                else{
-                    Toast.makeText(context,"Пароли не сходятся",Toast.LENGTH_SHORT).show()
-                }
-            }
-            else{
+            } else {
                 Toast.makeText(context, "Не оставляйте пустые поля", Toast.LENGTH_SHORT).show()
             }
             Handler().postDelayed({
@@ -99,30 +97,62 @@ class sign_up : Fragment(){
         }
     }
 
-    private fun registrationUser(name:String,email: String, password: String){
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-            if(it.isSuccessful){
-                val user = User(userName = name, userPassword = password, userEmail = email)
+    private fun registrationUser(name: String, email: String, password: String) {
+        mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val signInMethods = task.result?.signInMethods ?: emptyList()
 
-                FirebaseDatabase.getInstance().getReference("Users")
-                    .child(FirebaseAuth.getInstance().currentUser?.uid!!)
-                    .setValue(user)
-                    .addOnCompleteListener(OnCompleteListener<Void> { task ->
-                        if (task.isSuccessful) {
-                            navController.navigate(R.id.action_sign_up_to_notes_book)
+                if (signInMethods.isNotEmpty()) {
+                    // Пользователь уже существует, выводим сообщение об ошибке
+                    Toast.makeText(
+                        context,
+                        "Пользователь уже существует с таким email",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    ProgressBar.visibility = View.GONE
+                } else {
+                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            val user =
+                                User(userName = name, userPassword = password, userEmail = email)
+
+                            FirebaseDatabase.getInstance().getReference("Users")
+                                .child(FirebaseAuth.getInstance().currentUser?.uid!!)
+                                .setValue(user)
+                                .addOnCompleteListener(OnCompleteListener<Void> { task ->
+                                    if (task.isSuccessful) {
+                                        navController.navigate(R.id.action_sign_up_to_notes_book)
+                                    } else {
+                                        Toast.makeText(
+                                            context,
+                                            "Возникла ошибка",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                })
                         } else {
-                            Toast.makeText(context, "Возникла ошибка", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                context,
+                                "Не удалось зарегистрировать пользователя",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                    })
+                        ProgressBar.visibility = View.GONE
+                    }
+                }
+
+            } else {
+                Toast.makeText(
+                    context,
+                    "Не удалось проверить email пользователя",
+                    Toast.LENGTH_SHORT
+                ).show()
+                ProgressBar.visibility = View.GONE
             }
-            else{
-                Toast.makeText(context, "Пользователь уже имеется с такими данными", Toast.LENGTH_SHORT).show()
-            }
-            ProgressBar.visibility = View.GONE
         }
     }
 
-    private fun init(view: View){
+    private fun init(view: View) {
         navController = Navigation.findNavController(view)
         mAuth = FirebaseAuth.getInstance()
     }

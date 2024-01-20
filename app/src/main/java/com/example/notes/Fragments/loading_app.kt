@@ -1,5 +1,6 @@
 package com.example.notes.Fragments
 
+import android.content.Context
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.os.Handler
@@ -13,10 +14,11 @@ import androidx.navigation.Navigation
 import com.example.notes.R
 import com.google.firebase.auth.FirebaseAuth
 
-class loading_app : Fragment(){
+class loading_app : Fragment() {
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var navController: NavController
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,16 +36,15 @@ class loading_app : Fragment(){
 
         val handler = Handler(Looper.myLooper()!!)
         handler.postDelayed({
-            if (isLogin){
-              navController.navigate(R.id.action_loading_app_to_notes_book)
-            }
-            else{
+            if (isLogin) {
+                navController.navigate(R.id.action_loading_app_to_notes_book)
+            } else {
                 navController.navigate(R.id.action_loading_app_to_sign_in)
             }
         }, 2000)
     }
 
-    private fun init(view: View){
+    private fun init(view: View) {
         mAuth = FirebaseAuth.getInstance()
         navController = Navigation.findNavController(view)
     }

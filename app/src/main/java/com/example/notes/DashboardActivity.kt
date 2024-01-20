@@ -3,6 +3,7 @@ package com.example.notes
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.Preference
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -10,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.notes.Fragments.loading_app
 import com.example.notes.UI.about.nav_about
 import com.example.notes.databinding.ActivityDashboardBinding
 import com.example.notes.databinding.ActivityMainBinding
@@ -46,28 +48,32 @@ class DashboardActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         //фрагменты для которых не показываем боковое меню
-        navController.addOnDestinationChangedListener{_,destination,_ ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id in setOf(
                     R.id.loading_app,
                     R.id.sign_in,
                     R.id.sign_up
                 )
-            ){
+            ) {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                 supportActionBar?.hide()
-            }else{
+            } else {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                 supportActionBar?.show()
             }
         }
 
         navView.setNavigationItemSelectedListener { menuItem ->
-            when(menuItem.itemId){
+            when (menuItem.itemId) {
                 // Обработчик нажатия на элемент меню "О приложении"
                 R.id.nav_about -> {
-                    startActivity(Intent(this,nav_about::class.java))
+                    startActivity(Intent(this, nav_about::class.java))
                     drawerLayout.closeDrawer(GravityCompat.START)
                     return@setNavigationItemSelectedListener true
+                }
+
+                R.id.nav_exit -> {
+                    navController.navigate(R.id.action_notes_book_to_sign_in)
                 }
 
             }

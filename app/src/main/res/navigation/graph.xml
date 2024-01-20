@@ -44,7 +44,11 @@
         android:id="@+id/notes_book"
         android:name="com.example.notes.notes_book"
         android:label="Заметки"
-        tools:layout="@layout/notes_book" />
+        tools:layout="@layout/notes_book" >
+        <action
+            android:id="@+id/action_notes_book_to_sign_in"
+            app:destination="@id/sign_in" />
+    </fragment>
     <activity
         android:id="@+id/nav_about"
         android:name="com.example.notes.UI.about.nav_about"
