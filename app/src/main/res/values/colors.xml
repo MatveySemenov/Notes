@@ -10,4 +10,5 @@
     <color name="splash_animal">#fff8dc</color>
     <color name="orange_animal">#f16c39</color>
     <color name="color_for_PrimaryVariant">#f2dec7</color>
+    <color name="color_for_PrimaryVariant_night">#282828</color>
 </resources>
