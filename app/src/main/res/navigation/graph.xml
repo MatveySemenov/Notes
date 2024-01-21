@@ -53,5 +53,10 @@
         android:id="@+id/nav_about"
         android:name="com.example.notes.UI.about.nav_about"
         android:label="О приложении" />
+    <activity
+        android:id="@+id/nav_settings"
+        android:name="com.example.notes.UI.settings.nav_settings"
+        android:label="nav_settings"
+        tools:layout="@layout/nav_settings" />
 
 </navigation>

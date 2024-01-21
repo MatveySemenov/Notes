@@ -12,6 +12,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.notes.UI.about.nav_about
+import com.example.notes.UI.settings.nav_settings
 import com.example.notes.databinding.ActivityDashboardBinding
 import com.google.android.material.navigation.NavigationView
 
@@ -74,6 +75,12 @@ class DashboardActivity : AppCompatActivity() {
 
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
+                //Обработчик нажатия на элемент меню "Настройки"
+                R.id.nav_settings -> {
+                    startActivity(Intent(this, nav_settings::class.java))
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    return@setNavigationItemSelectedListener true
+                }
                 // Обработчик нажатия на элемент меню "О приложении"
                 R.id.nav_about -> {
                     startActivity(Intent(this, nav_about::class.java))
