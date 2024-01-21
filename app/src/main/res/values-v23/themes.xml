@@ -3,7 +3,7 @@
 
     <style name="Theme.Notes" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/color_for_all_app_NoNight</item>
         <item name="colorPrimaryVariant">@color/color_for_PrimaryVariant</item>
         <item name="colorOnPrimary">@color/color_for_PrimaryVariant</item>
         <!-- Secondary brand color. -->
