@@ -3,6 +3,7 @@ package com.example.notes
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -28,6 +29,18 @@ class DashboardActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
+
+
+        /*val userName = intent.getStringExtra("userName")
+        val userEmail = intent.getStringExtra("userEmail")
+
+        val headerView = navView.getHeaderView(0)
+        val navHeaderName = headerView.findViewById<TextView>(R.id.nav_header_name)
+        navHeaderName.text = userName*/
+
+
+
+
 
         //фрагменты для которых мы показываем боковое меню
         appBarConfiguration = AppBarConfiguration(

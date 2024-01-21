@@ -1,5 +1,6 @@
 package com.example.notes.Fragments
 
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.os.Handler
@@ -12,7 +13,9 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.example.notes.DashboardActivity
 import com.example.notes.R
+import com.example.notes.ReadData
 import com.example.notes.databinding.SignInBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -72,9 +75,24 @@ class sign_in() : Fragment(){
             val email = binding.emailIn.text.toString()
             val password = binding.passwordIn.text.toString()
             ProgressBar = binding.progressBarSignIn!!
-            
+
+
             if(email.isNotEmpty() && password.isNotEmpty()){
                 Autentification(email,password)
+                /*val readData = ReadData()
+                readData.readUserDataByEmail(email){ userList ->
+                    for (user in userList){
+                        val userName = user.userName
+                        val userEmail = user.userEmail
+
+                        val intent = Intent(activity,DashboardActivity::class.java)
+
+                        intent.putExtra("userName",userName)
+                        intent.putExtra("userEmail",userEmail)
+
+                    }
+
+                }*/
                 ProgressBar.visibility = View.VISIBLE
             }
             else{
