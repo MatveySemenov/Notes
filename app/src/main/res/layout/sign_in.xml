@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fon"
+    android:background="@color/color_for_PrimaryVariant"
     tools:context=".Fragments.sign_in">
 
     <ProgressBar
@@ -71,6 +71,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
+                android:textColorHint="@color/color_for_hint"
+                android:textColor="@color/black"
                 android:hint="@string/enter_your_email"
                 android:inputType="textEmailAddress"
                 android:paddingStart="12dp"
@@ -109,6 +111,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
+                android:textColorHint="@color/color_for_hint"
+                android:textColor="@color/black"
                 android:hint="@string/enter_your_password"
                 android:inputType="textPassword"
                 android:paddingStart="12dp"
@@ -136,6 +140,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/color_for_sign_in_up_regestr"
         android:text="@string/not_registredet"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
