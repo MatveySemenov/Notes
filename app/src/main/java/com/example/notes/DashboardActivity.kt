@@ -2,6 +2,7 @@ package com.example.notes
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
@@ -42,8 +43,6 @@ class DashboardActivity : AppCompatActivity() {
         val headerView = navView.getHeaderView(0)
         val navHeaderName = headerView.findViewById<TextView>(R.id.nav_header_name)
         navHeaderName.text = userName*/
-
-
 
 
 
@@ -107,6 +106,7 @@ class DashboardActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    //Темы
     private fun getThemeOpenApp(){
         // Инициализируйте тему здесь, до загрузки активности
         val isDarkTheme = getSavedThemeState()

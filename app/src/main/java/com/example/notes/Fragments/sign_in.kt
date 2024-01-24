@@ -1,6 +1,8 @@
 package com.example.notes.Fragments
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.os.Handler
@@ -58,6 +60,7 @@ class sign_in() : Fragment(){
         }
 
         init(view)
+
 
         binding.registration.setOnClickListener {
             navController.navigate(R.id.action_sign_in_to_sign_up)

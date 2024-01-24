@@ -8,20 +8,29 @@
     android:background="?attr/colorOnPrimary"
     tools:context="UI.about.nav_about">
 
-    <RelativeLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/img_back_arrow_nav_about"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:padding="8dp"
-            app:srcCompat="@drawable/back" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorOnPrimary">
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/img_back_arrow_nav_about"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:padding="8dp"
+                app:srcCompat="@drawable/back" />
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <ImageView
         android:id="@+id/imageView"

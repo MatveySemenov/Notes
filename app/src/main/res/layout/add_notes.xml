@@ -8,37 +8,47 @@
     android:background="?attr/colorOnPrimary"
     tools:context=".add_notes">
 
-    <RelativeLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/relativeLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/img_back_arrow"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:padding="8dp"
-            app:srcCompat="@drawable/back" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorOnPrimary">
 
-        <ImageView
-            android:id="@+id/img_check"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="12dp"
-            android:padding="8dp"
-            app:srcCompat="@drawable/save" />
+            <ImageView
+                android:id="@+id/img_back_arrow"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:padding="8dp"
+                app:srcCompat="@drawable/back" />
 
-        <ImageView
-            android:id="@+id/img_delete"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_marginEnd="12dp"
-            android:layout_toLeftOf="@+id/img_check"
-            android:padding="8dp"
-            app:srcCompat="@drawable/delete" />
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/img_check"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_marginEnd="12dp"
+                android:padding="8dp"
+                android:layout_gravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/save" />
+
+            <ImageView
+                android:id="@+id/img_delete"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_marginEnd="12dp"
+                android:padding="8dp"
+                android:layout_gravity="end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/delete" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,25 +75,22 @@
         <EditText
             android:id="@+id/et_note"
             android:layout_width="match_parent"
-            android:layout_height="585dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="26dp"
-            android:layout_marginEnd="16dp"
-            android:background="@null"
+            android:layout_height="515dp"
             android:layout_marginStart="16dp"
-            android:textColor="?attr/colorPrimary"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="26dp"
+            android:background="@null"
             android:ems="15"
             android:gravity="top"
             android:hint="@string/text"
             android:inputType="textMultiLine"
             android:lineSpacingMultiplier="1.8"
+            android:textColor="?attr/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/et_title"
             app:layout_constraintStart_toStartOf="@+id/et_title"
             app:layout_constraintTop_toBottomOf="@+id/et_title" />
     </LinearLayout>
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
