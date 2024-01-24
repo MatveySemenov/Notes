@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -15,9 +16,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
-import com.example.notes.DashboardActivity
-import com.example.notes.R
-import com.example.notes.ReadData
+import com.example.notes.*
 import com.example.notes.databinding.SignInBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -28,8 +27,7 @@ class sign_in() : Fragment(){
     private lateinit var mAuth: FirebaseAuth
     private lateinit var binding: SignInBinding
     private lateinit var ProgressBar: ProgressBar
-
-    private var doubleBackToExitPressedOnce = false
+    private lateinit var exitApp: ExitApp
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,23 +39,10 @@ class sign_in() : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.isFocusableInTouchMode = true
-        view.requestFocus()
-        view.setOnKeyListener { _, keyCode, _ ->
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                if (doubleBackToExitPressedOnce) {
-                    activity?.finishAffinity() // Завершить все активности приложения
-                } else {
-                    doubleBackToExitPressedOnce = true
 
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        doubleBackToExitPressedOnce = false
-                    }, 2000)
-                }
-                return@setOnKeyListener true
-            }
-            false
-        }
+        exitApp = ExitApp(requireActivity())
+        exitApp.setupBackPressHandler(view)
+
 
         init(view)
 
@@ -65,6 +50,8 @@ class sign_in() : Fragment(){
         binding.registration.setOnClickListener {
             navController.navigate(R.id.action_sign_in_to_sign_up)
         }
+
+        val appPreferences = AppPreferences(requireContext())
 
         var isProcessing = false
 
@@ -82,20 +69,22 @@ class sign_in() : Fragment(){
 
             if(email.isNotEmpty() && password.isNotEmpty()){
                 Autentification(email,password)
-                /*val readData = ReadData()
+
+                val readData = ReadData()
                 readData.readUserDataByEmail(email){ userList ->
                     for (user in userList){
                         val userName = user.userName
                         val userEmail = user.userEmail
 
-                        val intent = Intent(activity,DashboardActivity::class.java)
-
-                        intent.putExtra("userName",userName)
-                        intent.putExtra("userEmail",userEmail)
-
+                        appPreferences.saveUserData(userName,userEmail)
+                        //Обновление UI
+                        if(activity is UserDataChangeListener){
+                            val userDataChangeListener = activity as UserDataChangeListener
+                            userDataChangeListener.getUINavHeaderMain(userName, userEmail)
+                        }
                     }
 
-                }*/
+                }
                 ProgressBar.visibility = View.VISIBLE
             }
             else{

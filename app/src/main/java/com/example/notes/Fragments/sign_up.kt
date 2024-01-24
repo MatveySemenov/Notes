@@ -12,8 +12,11 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.example.notes.AppPreferences
+import com.example.notes.ExitApp
 import com.example.notes.ListUser.User
 import com.example.notes.R
+import com.example.notes.UserDataChangeListener
 import com.example.notes.databinding.SignUpBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
@@ -25,8 +28,7 @@ class sign_up : Fragment() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var binding: SignUpBinding
     private lateinit var ProgressBar: ProgressBar
-
-    private var doubleBackToExitPressedOnce = false
+    private lateinit var exitApp: ExitApp
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,26 +40,14 @@ class sign_up : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val appPreferences = AppPreferences(requireContext())
 
-        view.isFocusableInTouchMode = true
-        view.requestFocus()
-        view.setOnKeyListener { _, keyCode, _ ->
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                if (doubleBackToExitPressedOnce) {
-                    activity?.finishAffinity()
-                } else {
-                    doubleBackToExitPressedOnce = true
 
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        doubleBackToExitPressedOnce = false
-                    }, 2000)
-                }
-                return@setOnKeyListener true
-            }
-            false
-        }
+        exitApp = ExitApp(requireActivity())
+        exitApp.setupBackPressHandler(view)
 
         init(view)
+
 
         binding.entry.setOnClickListener {
             navController.navigate(R.id.action_sign_up_to_sign_in)
@@ -80,6 +70,13 @@ class sign_up : Fragment() {
             if (email.isNotEmpty() && password.isNotEmpty() && verifyPassword.isNotEmpty() && name.isNotEmpty()) {
                 if (password == verifyPassword) {
                     registrationUser(name, email, password)
+
+                    appPreferences.saveUserData(name,email)
+                    if(activity is UserDataChangeListener){
+                        val userDataChangeListener = activity as UserDataChangeListener
+                        userDataChangeListener.getUINavHeaderMain(name,email)
+                    }
+
                     ProgressBar.visibility = View.VISIBLE
                 } else {
                     Toast.makeText(context, "Пароли не сходятся", Toast.LENGTH_SHORT).show()

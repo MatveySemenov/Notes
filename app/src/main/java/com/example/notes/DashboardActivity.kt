@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
@@ -19,7 +20,7 @@ import com.example.notes.UI.settings.nav_settings
 import com.example.notes.databinding.ActivityDashboardBinding
 import com.google.android.material.navigation.NavigationView
 
-class DashboardActivity : AppCompatActivity() {
+class DashboardActivity : AppCompatActivity(), UserDataChangeListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDashboardBinding
 
@@ -37,14 +38,12 @@ class DashboardActivity : AppCompatActivity() {
         // ставить тему при открытии приложения
         getThemeOpenApp()
 
-        /*val userName = intent.getStringExtra("userName")
-        val userEmail = intent.getStringExtra("userEmail")
 
-        val headerView = navView.getHeaderView(0)
-        val navHeaderName = headerView.findViewById<TextView>(R.id.nav_header_name)
-        navHeaderName.text = userName*/
+        val appPreferences = AppPreferences(this)
+        appPreferences.setUserDataChangeListener(this)
 
-
+        val (userName, userEmail) = appPreferences.getUserData()
+        getUINavHeaderMain(userName,userEmail)
 
         //фрагменты для которых мы показываем боковое меню
         appBarConfiguration = AppBarConfiguration(
@@ -106,6 +105,14 @@ class DashboardActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    override fun getUINavHeaderMain(userName: String?, userEmail: String?) {
+        val headerView = binding.navView.getHeaderView(0)
+        val navHeaderName = headerView.findViewById<TextView>(R.id.nav_header_name)
+        navHeaderName.text = userName
+        val navHeaderEmail = headerView.findViewById<TextView>(R.id.nav_header_gmail)
+        navHeaderEmail.text = userEmail
+    }
+
     //Темы
     private fun getThemeOpenApp(){
         // Инициализируйте тему здесь, до загрузки активности
@@ -116,6 +123,7 @@ class DashboardActivity : AppCompatActivity() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
+
     private fun getSavedThemeState(): Boolean {
         val sharedPreferences = getSharedPreferences("ThemePrefs", Context.MODE_PRIVATE)
         return sharedPreferences.getBoolean("isDarkTheme", false)
