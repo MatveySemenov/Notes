@@ -1,4 +1,4 @@
-package com.example.notes
+package com.example.notes.Fragments
 
 import android.app.Activity
 import android.content.Intent
@@ -14,6 +14,7 @@ import com.example.notes.Adaptor.NotesAdaptor
 import com.example.notes.DataBase.EntityDataBase
 import com.example.notes.DataBase.NotesDataBase
 import com.example.notes.DataBase.NotesViewModel
+import com.example.notes.add_notes
 import com.example.notes.databinding.NotesBookBinding
 
 class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
@@ -87,7 +88,7 @@ class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
         }
 
     override fun onNoteClicked(note: EntityDataBase) {
-        val intent = Intent(requireContext(),add_notes::class.java)
+        val intent = Intent(requireContext(), add_notes::class.java)
         intent.putExtra("current_note", note)
         UpdateOrDeleteNote.launch(intent)
     }

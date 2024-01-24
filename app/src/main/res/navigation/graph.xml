@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/notes_book"
-        android:name="com.example.notes.notes_book"
+        android:name="com.example.notes.Fragments.notes_book"
         android:label="Заметки"
         tools:layout="@layout/notes_book" >
         <action
@@ -56,7 +56,7 @@
     <activity
         android:id="@+id/nav_settings"
         android:name="com.example.notes.UI.settings.nav_settings"
-        android:label="nav_settings"
+        android:label="Настройки"
         tools:layout="@layout/nav_settings" />
 
 </navigation>
