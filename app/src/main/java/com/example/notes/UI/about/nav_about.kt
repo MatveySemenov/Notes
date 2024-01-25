@@ -12,7 +12,7 @@ class nav_about: AppCompatActivity() {
         binding = NavAboutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.imgBackArrowNavAbout?.setOnClickListener{
+        binding.imgBackArrowNavAbout.setOnClickListener{
             onBackPressed()
         }
     }

@@ -3,8 +3,6 @@ package com.example.notes.Fragments
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,13 +25,13 @@ class sign_up : Fragment() {
     private lateinit var navController: NavController
     private lateinit var mAuth: FirebaseAuth
     private lateinit var binding: SignUpBinding
-    private lateinit var ProgressBar: ProgressBar
+    private lateinit var progressBar: ProgressBar
     private lateinit var exitApp: ExitApp
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = SignUpBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -65,7 +63,7 @@ class sign_up : Fragment() {
             val password = binding.passwordUp.text.toString()
             val verifyPassword = binding.verifyPasswordUp.text.toString()
             val name = binding.NameUp.text.toString()
-            ProgressBar = binding.progressBar
+            progressBar = binding.progressBar
 
             if (email.isNotEmpty() && password.isNotEmpty() && verifyPassword.isNotEmpty() && name.isNotEmpty()) {
                 if (password == verifyPassword) {
@@ -77,7 +75,7 @@ class sign_up : Fragment() {
                         userDataChangeListener.getUINavHeaderMain(name,email)
                     }
 
-                    ProgressBar.visibility = View.VISIBLE
+                    progressBar.visibility = View.VISIBLE
                 } else {
                     Toast.makeText(context, "Пароли не сходятся", Toast.LENGTH_SHORT).show()
                 }
@@ -103,7 +101,7 @@ class sign_up : Fragment() {
                         "Пользователь уже существует с таким email",
                         Toast.LENGTH_SHORT
                     ).show()
-                    ProgressBar.visibility = View.GONE
+                    progressBar.visibility = View.GONE
                 } else {
                     mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                         if (it.isSuccessful) {
@@ -131,7 +129,7 @@ class sign_up : Fragment() {
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-                        ProgressBar.visibility = View.GONE
+                        progressBar.visibility = View.GONE
                     }
                 }
 
@@ -141,7 +139,7 @@ class sign_up : Fragment() {
                     "Не удалось проверить email пользователя",
                     Toast.LENGTH_SHORT
                 ).show()
-                ProgressBar.visibility = View.GONE
+                progressBar.visibility = View.GONE
             }
         }
     }

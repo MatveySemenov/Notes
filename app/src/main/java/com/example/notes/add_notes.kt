@@ -16,7 +16,7 @@ class add_notes : AppCompatActivity(){
     private lateinit var binding: AddNotesBinding
     private lateinit var note: EntityDataBase
     private lateinit var oldNote: EntityDataBase
-    var isUpdate = false
+    private var isUpdate = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,14 +45,13 @@ class add_notes : AppCompatActivity(){
             if(title.isNotEmpty() || noteText.isNotEmpty()){
                 val data = SimpleDateFormat("EEE, d MMM yyyy HH:mm a")
 
-                if(isUpdate){
-                    note = EntityDataBase(oldNote.id,title,noteText,data.format(Date()))
-                }
-                else{
-                    note = EntityDataBase(null, title, noteText, data.format(Date()))
+                note = if (isUpdate){
+                    EntityDataBase(oldNote.id,title,noteText,data.format(Date()))
+                } else{
+                    EntityDataBase(null, title, noteText, data.format(Date()))
                 }
 
-                var intent = Intent()
+                val intent = Intent()
                 intent.putExtra("note",note)
                 setResult(Activity.RESULT_OK, intent)
                 finish()
@@ -64,7 +63,7 @@ class add_notes : AppCompatActivity(){
         }
 
         binding.imgDelete.setOnClickListener {
-            var intent = Intent()
+            val intent = Intent()
             intent.putExtra("note",oldNote)
             intent.putExtra("delete_note", true)
             setResult(Activity.RESULT_OK, intent)

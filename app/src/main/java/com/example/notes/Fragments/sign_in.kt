@@ -1,14 +1,8 @@
 package com.example.notes.Fragments
 
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,13 +20,13 @@ class sign_in() : Fragment(){
     private lateinit var navController: NavController
     private lateinit var mAuth: FirebaseAuth
     private lateinit var binding: SignInBinding
-    private lateinit var ProgressBar: ProgressBar
+    private lateinit var progressBar: ProgressBar
     private lateinit var exitApp: ExitApp
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = SignInBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -64,7 +58,7 @@ class sign_in() : Fragment(){
 
             val email = binding.emailIn.text.toString()
             val password = binding.passwordIn.text.toString()
-            ProgressBar = binding.progressBarSignIn!!
+            progressBar = binding.progressBarSignIn!!
 
 
             if(email.isNotEmpty() && password.isNotEmpty()){
@@ -85,7 +79,7 @@ class sign_in() : Fragment(){
                     }
 
                 }
-                ProgressBar.visibility = View.VISIBLE
+                progressBar.visibility = View.VISIBLE
             }
             else{
                 Toast.makeText(context, "Введите логин и пароль",Toast.LENGTH_SHORT).show()
@@ -104,7 +98,7 @@ class sign_in() : Fragment(){
             else{
                 Toast.makeText(context,"Пользователь не зарегистрирован",Toast.LENGTH_SHORT).show()
             }
-            ProgressBar.visibility = View.GONE
+            progressBar.visibility = View.GONE
         }
     }
 

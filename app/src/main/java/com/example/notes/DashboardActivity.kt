@@ -2,10 +2,8 @@ package com.example.notes
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat

@@ -3,7 +3,6 @@ package com.example.notes.UI.settings
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity

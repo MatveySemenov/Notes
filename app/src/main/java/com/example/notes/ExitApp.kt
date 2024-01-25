@@ -16,7 +16,7 @@ class ExitApp(private val activity: Activity) {
         view.setOnKeyListener { _, keyCode, _ ->
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 if (doubleBackToExitPressedOnce) {
-                    activity?.finishAffinity()
+                    activity.finishAffinity()
                 } else {
                     doubleBackToExitPressedOnce = true
 

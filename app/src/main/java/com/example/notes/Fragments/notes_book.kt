@@ -27,7 +27,7 @@ class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = NotesBookBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -79,9 +79,9 @@ class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
             if (result.resultCode == Activity.RESULT_OK) {
                 val note = result.data?.getSerializableExtra("note") as EntityDataBase
                 val isDelete = result.data?.getBooleanExtra("delete_note", false) as Boolean
-                if (note != null && !isDelete) {
+                if (!isDelete) {
                     viewModel.updateNote(note)
-                } else if (note != null && isDelete) {
+                } else if (isDelete) {
                     viewModel.deleteNote(note)
                 }
             }
