@@ -13,6 +13,7 @@
     <string name="title">Заголовок</string>
     <string name="text">Текст</string>
     <string name="data_creation">дата создания</string>
+    <string name="sign_in_guest">Войти как гость</string>
 
 
     <!-- menu -->
