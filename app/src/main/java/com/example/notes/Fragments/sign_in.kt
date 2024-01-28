@@ -1,5 +1,6 @@
 package com.example.notes.Fragments
 
+import android.app.AlertDialog
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.os.Handler
@@ -34,18 +35,28 @@ class sign_in() : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val appPreferences = AppPreferences(requireContext())
         exitApp = ExitApp(requireActivity())
         exitApp.setupBackPressHandler(view)
 
-
         init(view)
 
-
+        //войти как гость
+        binding.signInGuest.setOnClickListener {
+            val userName = "Гость"
+            val userEmail = "нет информации"
+            appPreferences.saveUserData(userName,userEmail)
+            //Обновление UI
+            if(activity is UserDataChangeListener){
+                val userDataChangeListener = activity as UserDataChangeListener
+                userDataChangeListener.getUINavHeaderMain(userName, userEmail)
+            }
+            showGuestAlert()
+        }
+        //перейти к регистрации
         binding.registration.setOnClickListener {
             navController.navigate(R.id.action_sign_in_to_sign_up)
         }
-
-        val appPreferences = AppPreferences(requireContext())
 
         var isProcessing = false
 
@@ -53,23 +64,17 @@ class sign_in() : Fragment(){
             if (isProcessing) {
                 return@setOnClickListener
             }
-
             isProcessing = true
-
             val email = binding.emailIn.text.toString()
             val password = binding.passwordIn.text.toString()
             progressBar = binding.progressBarSignIn!!
-
-
             if(email.isNotEmpty() && password.isNotEmpty()){
                 Autentification(email,password)
-
                 val readData = ReadData()
                 readData.readUserDataByEmail(email){ userList ->
                     for (user in userList){
                         val userName = user.userName
                         val userEmail = user.userEmail
-
                         appPreferences.saveUserData(userName,userEmail)
                         //Обновление UI
                         if(activity is UserDataChangeListener){
@@ -90,6 +95,21 @@ class sign_in() : Fragment(){
         }
     }
 
+    private fun showGuestAlert(){
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Вход как гость")
+        builder.setMessage("Если вы войдете как гость," +
+                " ваши данные не сохранятся на сервере. Вы не сможете использовать приложение на нескольких " +
+                "устройствах и не сможете восстановить данные в случае потери.")
+        builder.setPositiveButton("Продолжить"){ dialog , _ ->
+            navController.navigate(R.id.action_sign_in_to_notes_book)
+            dialog.dismiss()
+        }
+        builder.setNegativeButton("Назад"){ _ , _ ->
+
+        }
+        builder.show()
+    }
     private fun Autentification(email: String, password: String){
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
             if(it.isSuccessful){
@@ -107,4 +127,3 @@ class sign_in() : Fragment(){
         mAuth = FirebaseAuth.getInstance()
     }
 }
-
