@@ -17,6 +17,7 @@ import com.example.notes.UI.about.nav_about
 import com.example.notes.UI.settings.nav_settings
 import com.example.notes.databinding.ActivityDashboardBinding
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class DashboardActivity : AppCompatActivity(), UserDataChangeListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -89,7 +90,10 @@ class DashboardActivity : AppCompatActivity(), UserDataChangeListener {
                 }
 
                 R.id.nav_exit -> {
+                    FirebaseAuth.getInstance().signOut() //выйти из аккаунта
                     navController.navigate(R.id.action_notes_book_to_sign_in)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    return@setNavigationItemSelectedListener true
                 }
 
             }
