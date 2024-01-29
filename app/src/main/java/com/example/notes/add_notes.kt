@@ -96,7 +96,8 @@ class add_notes : AppCompatActivity(){
 
         if (uid != null){
             val noteRef = FirebaseDatabase.getInstance().getReference("notes").child(uid).push()
-            val note = NoteFirebase(title, text, date)
+            val noteId = noteRef.push().key
+            val note = NoteFirebase(noteId!!,title, text, date)
 
             noteRef.setValue(note).addOnCompleteListener { task ->
                 if(task.isSuccessful){

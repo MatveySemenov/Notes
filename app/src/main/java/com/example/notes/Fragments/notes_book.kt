@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,8 +15,14 @@ import com.example.notes.Adaptor.NotesAdaptor
 import com.example.notes.DataBase.EntityDataBase
 import com.example.notes.DataBase.NotesDataBase
 import com.example.notes.DataBase.NotesViewModel
+import com.example.notes.ListUser.NoteFirebase
 import com.example.notes.add_notes
 import com.example.notes.databinding.NotesBookBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
     private lateinit var binding: NotesBookBinding
@@ -37,14 +44,21 @@ class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
 
         initUI()
 
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        adapter.setGuestUser(currentUser == null)
+
         viewModel = ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
         ).get(NotesViewModel::class.java)
 
-        viewModel.allNotes.observe(viewLifecycleOwner){list ->
-            list?.let {
-                adapter.updateList(list)
+        if (currentUser != null) {
+            readNotesFromFirebase()
+        } else{
+            viewModel.allNotes.observe(viewLifecycleOwner){list ->
+                list?.let {
+                    adapter.updateList(list)
+                }
             }
         }
         database = NotesDataBase.getDataBase(requireContext())
@@ -92,5 +106,33 @@ class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
         intent.putExtra("current_note", note)
         UpdateOrDeleteNote.launch(intent)
     }
+
+    private fun readNotesFromFirebase() {
+        val user = FirebaseAuth.getInstance().currentUser
+        val uid = user?.uid
+
+        if (uid != null) {
+            val notesRef = FirebaseDatabase.getInstance().getReference("notes").child(uid)
+
+            notesRef.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val notesList = mutableListOf<NoteFirebase>()
+
+                    for (noteSnapshot in dataSnapshot.children) {
+                        val note = noteSnapshot.getValue(NoteFirebase::class.java)
+                        note?.let {
+                            notesList.add(it)
+                        }
+                    }
+                    adapter.updateFirebaseList(notesList)
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Toast.makeText(context, "Ошибка чтения заметок", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+    }
+
 
 }
