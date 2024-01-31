@@ -1,16 +1,10 @@
 package com.example.notes.ListUser
 
-class NoteFirebase() {
-    var id: String = ""
-    var title: String = ""
-    var text: String = ""
-    var date: String = ""
+import java.io.Serializable
 
-    // Добавьте конструктор без аргументов
-    constructor(id: String, title: String, text: String, date: String) : this() {
-        this.id = id
-        this.title = title
-        this.text = text
-        this.date = date
-    }
-}
+class NoteFirebase(
+    var id: String = "",
+    var title: String = "",
+    var text: String = "",
+    var date: String = ""
+) : Serializable

@@ -59,7 +59,7 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
                     holder.date.text = item.date
                     holder.date.isSelected = true
                     holder.note_layout.setOnClickListener {
-
+                        listener.onNoteClickedFirebase(notesListFirebase[holder.adapterPosition])
                     }
                 }
             }
@@ -92,5 +92,6 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
 
     interface NoteClickListener {
         fun onNoteClicked(note: EntityDataBase)
+        fun onNoteClickedFirebase(note: NoteFirebase)
     }
 }

@@ -30,6 +30,8 @@ class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
     lateinit var viewModel: NotesViewModel
     lateinit var adapter: NotesAdaptor
 
+    val currentUser = FirebaseAuth.getInstance().currentUser
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,7 +46,7 @@ class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
 
         initUI()
 
-        val currentUser = FirebaseAuth.getInstance().currentUser
+
         adapter.setGuestUser(currentUser == null)
 
         viewModel = ViewModelProvider(
@@ -75,9 +77,16 @@ class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
         val getContent =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK) {
-                    val note = result.data?.getSerializableExtra("note") as? EntityDataBase
-                    if (note != null) {
-                        viewModel.insertNote(note)
+                    if (currentUser != null){
+                        val note = result.data?.getSerializableExtra("noteFirebase") as? NoteFirebase
+                        if (note != null){
+                            viewModel.insertFirebase(note)
+                        }
+                    } else {
+                        val note = result.data?.getSerializableExtra("note") as? EntityDataBase
+                        if (note != null) {
+                            viewModel.insertNote(note)
+                        }
                     }
                 }
             }
@@ -91,19 +100,43 @@ class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
     private val UpdateOrDeleteNote =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val note = result.data?.getSerializableExtra("note") as EntityDataBase
-                val isDelete = result.data?.getBooleanExtra("delete_note", false) as Boolean
-                if (!isDelete) {
-                    viewModel.updateNote(note)
-                } else if (isDelete) {
-                    viewModel.deleteNote(note)
+                if (currentUser != null){
+                    //Пользователь авторизован, выполняются операции Firebase
+                    val noteFirebase = result.data?.getSerializableExtra("noteFirebase") as? NoteFirebase
+                    val isDeleteFirebase = result.data?.getBooleanExtra("delete_noteFirebase",false) ?: false
+
+                    if (noteFirebase != null){
+                        if(!isDeleteFirebase){
+                            viewModel.updateFirebaseNote(noteFirebase)
+                        } else {
+                            viewModel.deleteFirebaseNote(noteFirebase)
+                        }
+                    }
+
+                } else {
+                    val note = result.data?.getSerializableExtra("note") as EntityDataBase
+                    val isDelete = result.data?.getBooleanExtra("delete_note", false) as Boolean
+
+                    if (!isDelete) {
+                        viewModel.updateNote(note)
+                    } else if (isDelete) {
+                        viewModel.deleteNote(note)
+                    }
                 }
             }
         }
 
+    // для локальной
     override fun onNoteClicked(note: EntityDataBase) {
         val intent = Intent(requireContext(), add_notes::class.java)
         intent.putExtra("current_note", note)
+        UpdateOrDeleteNote.launch(intent)
+    }
+
+    //для серверной
+    override fun onNoteClickedFirebase(note: NoteFirebase) {
+        val intent = Intent(requireContext(), add_notes::class.java)
+        intent.putExtra("firebase_note", note)
         UpdateOrDeleteNote.launch(intent)
     }
 
