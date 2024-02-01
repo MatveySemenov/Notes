@@ -8,12 +8,13 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.notes.UI.about.nav_about
+import com.example.notes.UI.about.NavAbout
 import com.example.notes.UI.settings.nav_settings
 import com.example.notes.databinding.ActivityDashboardBinding
 import com.google.android.material.navigation.NavigationView
@@ -22,6 +23,9 @@ import com.google.firebase.auth.FirebaseAuth
 class DashboardActivity : AppCompatActivity(), UserDataChangeListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDashboardBinding
+    private lateinit var navController: NavController
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navView: NavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,13 +34,17 @@ class DashboardActivity : AppCompatActivity(), UserDataChangeListener {
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
-        val drawerLayout: DrawerLayout = binding.drawerLayout
-        val navView: NavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        drawerLayout = binding.drawerLayout
+        navView = binding.navView
+
+        navController = findNavController(R.id.nav_host_fragment_content_main)
+
+        //Работает с меню приложения
+        menuOffAndOn()
+        navViewMenuItem()
 
         // ставить тему при открытии приложения
         getThemeOpenApp()
-
 
         val appPreferences = AppPreferences(this)
         appPreferences.setUserDataChangeListener(this)
@@ -44,15 +52,15 @@ class DashboardActivity : AppCompatActivity(), UserDataChangeListener {
         val (userName, userEmail) = appPreferences.getUserData()
         getUINavHeaderMain(userName,userEmail)
 
+    }
+
+    private fun menuOffAndOn(){
         //фрагменты для которых мы показываем боковое меню
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.notes_book,
                 R.id.nav_archives,
-                R.id.nav_trash,
-                R.id.nav_settings,
-                R.id.nav_about,
-                R.id.nav_exit
+                R.id.nav_trash
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -73,9 +81,17 @@ class DashboardActivity : AppCompatActivity(), UserDataChangeListener {
                 supportActionBar?.show()
             }
         }
+    }
 
+    private fun navViewMenuItem(){
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
+                R.id.notes_book, R.id.nav_archives, R.id.nav_trash -> {
+                    // Переход для notes_book, nav_archives, nav_trash
+                    navController.navigate(menuItem.itemId)
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                    return@setNavigationItemSelectedListener true
+                }
                 //Обработчик нажатия на элемент меню "Настройки"
                 R.id.nav_settings -> {
                     startActivity(Intent(this, nav_settings::class.java))
@@ -84,23 +100,29 @@ class DashboardActivity : AppCompatActivity(), UserDataChangeListener {
                 }
                 // Обработчик нажатия на элемент меню "О приложении"
                 R.id.nav_about -> {
-                    startActivity(Intent(this, nav_about::class.java))
+                    startActivity(Intent(this, NavAbout::class.java))
                     drawerLayout.closeDrawer(GravityCompat.START)
                     return@setNavigationItemSelectedListener true
                 }
-
+                // Обработчик нажатия на элемент меню "Выход"
                 R.id.nav_exit -> {
                     FirebaseAuth.getInstance().signOut() //выйти из аккаунта
-                    navController.navigate(R.id.action_notes_book_to_sign_in)
+
+                    val currentDestinationId = navController.currentDestination?.id
+
+                    when (currentDestinationId){
+                        R.id.notes_book -> navController.navigate(R.id.action_notes_book_to_sign_in)
+                        R.id.nav_archives -> navController.navigate(R.id.action_nav_archives_to_sign_in)
+                        R.id.nav_trash -> navController.navigate(R.id.action_nav_trash_to_sign_in)
+                    }
                     drawerLayout.closeDrawer(GravityCompat.START)
                     return@setNavigationItemSelectedListener true
                 }
-
             }
             false
         }
-
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
