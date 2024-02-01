@@ -40,6 +40,15 @@
                 app:srcCompat="@drawable/save" />
 
             <ImageView
+                android:id="@+id/img_archive"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="end"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/archive_while" />
+
+            <ImageView
                 android:id="@+id/img_delete"
                 android:layout_width="55dp"
                 android:layout_height="55dp"

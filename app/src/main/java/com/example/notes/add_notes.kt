@@ -21,13 +21,13 @@ class add_notes : AppCompatActivity(){
     private lateinit var binding: AddNotesBinding
     private lateinit var note: EntityDataBase
     private lateinit var oldNote: EntityDataBase
-    private var isUpdate = false
 
     private lateinit var noteFirebase: NoteFirebase
     private lateinit var oldNoteFirebase: NoteFirebase
     private lateinit var viewModel: NotesViewModel
 
-    val currentUser = FirebaseAuth.getInstance().currentUser
+    private var isUpdate = false
+    private val currentUser = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +48,6 @@ class add_notes : AppCompatActivity(){
                 binding.etNote.setText(oldNote.note)
                 isUpdate = true
             }
-
         }catch (e:Exception){
             e.printStackTrace()
         }

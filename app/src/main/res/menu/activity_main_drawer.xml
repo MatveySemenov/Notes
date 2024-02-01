@@ -10,11 +10,11 @@
             android:title="@string/nav_notes" />
         <item
             android:id="@+id/nav_archives"
-            android:icon="@drawable/ic_baseline_archive_24"
+            android:icon="@drawable/archive_while"
             android:title="@string/nav_archives" />
         <item
             android:id="@+id/nav_trash"
-            android:icon="@drawable/ic_baseline_delete_24"
+            android:icon="@drawable/delete"
             android:title="@string/nav_trash" />
     </group>
 

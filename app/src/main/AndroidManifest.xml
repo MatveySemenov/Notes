@@ -23,7 +23,7 @@
         </activity>
         <activity
             android:name=".UI.about.NavAbout"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".add_notes"
             android:exported="false" />
@@ -32,7 +32,7 @@
             android:exported="true" />
         <activity
             android:name=".UI.settings.nav_settings"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>
