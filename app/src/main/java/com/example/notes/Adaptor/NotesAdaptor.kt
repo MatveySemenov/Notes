@@ -1,9 +1,11 @@
 package com.example.notes.Adaptor
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +18,7 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
     RecyclerView.Adapter<NotesAdaptor.NoteViewHolder>() {
 
     private val notesList = ArrayList<EntityDataBase>()
+    private val archivedNotesList = ArrayList<EntityDataBase>()
     private var notesListFirebase: List<NoteFirebase> = emptyList()
     private var isGuestUser: Boolean = false
 
@@ -35,7 +38,7 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
 
     override fun onBindViewHolder(holder: NotesAdaptor.NoteViewHolder, position: Int) {
         when{
-            position < notesList.size && isGuestUser -> {
+            position < notesList.size && isGuestUser && !notesList[position].isArchived -> {
                 // Если заметка из локальной базы и пользователь гость
                 val item = notesList.getOrNull(position)
                 if (item != null){
@@ -48,7 +51,24 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
                         listener.onNoteClicked(notesList[holder.adapterPosition])
                     }
                 }
+                Log.d("ArchivedNotes", "дефолт : $position, Title: ${holder.title.text}, Note: ${holder.note.text}, Date: ${holder.date.text}")
             }
+            position < archivedNotesList.size && isGuestUser && archivedNotesList[position].isArchived -> {
+                // Если заметка из локальной базы и пользователь гость
+                val item = archivedNotesList.getOrNull(position)
+                if (item != null){
+                    holder.title.text = item.title
+                    holder.title.isSelected = true
+                    holder.note.text = item.note
+                    holder.date.text = item.date
+                    holder.date.isSelected = true
+                    holder.note_layout.setOnClickListener {
+                        listener.onNoteClicked(archivedNotesList[holder.adapterPosition])
+                    }
+                }
+                Log.d("ArchivedNotes", "архив : $position, Title: ${holder.title.text}, Note: ${holder.note.text}, Date: ${holder.date.text}")
+            }
+
             position < notesListFirebase.size && !isGuestUser -> {
                 //Если это заметка из Firebase
                 val item = notesListFirebase.getOrNull(position)
@@ -67,14 +87,22 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
     }
 
     override fun getItemCount(): Int {
-        return maxOf(notesList.size,notesListFirebase.size)
+        return maxOf(notesList.size,notesListFirebase.size,archivedNotesList.size)
     }
 
+
+    fun updateArchivedNotesList(newList: List<EntityDataBase>){
+        archivedNotesList.clear()
+        archivedNotesList.addAll(newList)
+        notifyDataSetChanged()
+        Log.d("ArchivedNotes", archivedNotesList.toString())
+    }
 
     fun updateList(newList: List<EntityDataBase>) {
         notesList.clear()
         notesList.addAll(newList)
         notifyDataSetChanged()
+        Log.d("ArchivedNotes", "заметка -> " + notesList.toString())
     }
 
     fun updateFirebaseList(newList: List<NoteFirebase>){

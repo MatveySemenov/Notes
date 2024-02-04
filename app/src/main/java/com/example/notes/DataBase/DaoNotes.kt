@@ -12,11 +12,16 @@ interface DaoNotes {
     @Delete
     suspend fun delete(note: EntityDataBase)
 
-    //Вывод в порядке возрастания по дате создания
-    @Query("SELECT * from notes_table ORDER BY date ASC")
+    //Вывод в порядке возрастания по дате создания не архивированных
+    @Query("SELECT * from notes_table WHERE isArchived = 0 ORDER BY date ASC")
     fun getAllNotes(): LiveData<List<EntityDataBase>>
 
+    //Вывод в порядке возрастания по дате создания архивированных
+    @Query("SELECT * from notes_table WHERE isArchived = 1 ORDER BY date ASC")
+    fun getAllArchivedNotes(): LiveData<List<EntityDataBase>>
+
     //Обновление таблицы
-    @Query("UPDATE notes_table set title= :title, note = :note, date = :date where id = :id")
-    suspend fun update(id: Int?, title: String?, note: String?,date: String)
+    @Query("UPDATE notes_table set title= :title, note = :note, date = :date,isArchived = :isArchived  where id = :id")
+    suspend fun update(id: Int?, title: String?, note: String?,date: String,isArchived: Boolean)
+
 }

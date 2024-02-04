@@ -27,16 +27,12 @@ import com.google.firebase.database.ValueEventListener
 class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
     private lateinit var binding: NotesBookBinding
     private lateinit var database: NotesDataBase
-    lateinit var viewModel: NotesViewModel
-    lateinit var adapter: NotesAdaptor
+    private lateinit var viewModel: NotesViewModel
+    private lateinit var adapter: NotesAdaptor
 
-    val currentUser = FirebaseAuth.getInstance().currentUser
+    private val currentUser = FirebaseAuth.getInstance().currentUser
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = NotesBookBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -46,20 +42,15 @@ class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
 
         initUI()
 
-
         adapter.setGuestUser(currentUser == null)
-
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-        ).get(NotesViewModel::class.java)
 
         if (currentUser != null) {
             readNotesFromFirebase()
         } else{
             viewModel.allNotes.observe(viewLifecycleOwner){list ->
                 list?.let {
-                    adapter.updateList(list)
+                    val activeNotes = it.filter { note -> !note.isArchived }
+                    adapter.updateList(activeNotes)
                 }
             }
         }
@@ -68,11 +59,18 @@ class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
 
 
     private fun initUI(){
+        //инициализируем адаптер
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
         adapter = NotesAdaptor(requireContext(), this)
         binding.recyclerView.adapter = adapter
+
+        //инициализируем viewModel
+        viewModel = ViewModelProvider(this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
+        ).get(NotesViewModel::class.java)
 
         val getContent =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

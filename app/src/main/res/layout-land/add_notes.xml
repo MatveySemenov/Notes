@@ -44,7 +44,7 @@
                 android:layout_gravity="end"
                 android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/archive_while" />
+                app:srcCompat="@drawable/archive" />
 
             <ImageView
                 android:id="@+id/img_delete"

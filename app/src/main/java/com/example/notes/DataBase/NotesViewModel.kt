@@ -13,12 +13,14 @@ class NotesViewModel(application: Application): AndroidViewModel(application) {
     private val repository: NotesRepository
     private val firebaseNotesRepository: FirebaseNotesRepository
     val allNotes: LiveData<List<EntityDataBase>>
+    val getAllArchivedNotes: LiveData<List<EntityDataBase>>
     val firebaseNotes: LiveData<List<NoteFirebase>>
 
     init {
         val dao = NotesDataBase.getDataBase(application).notesDao()
         repository = NotesRepository(dao)
         allNotes = repository.allNotes
+        getAllArchivedNotes = repository.getAllArchivedNotes
 
         // Инициализируем Firebase Repository
         firebaseNotesRepository = FirebaseNotesRepository()
@@ -26,7 +28,8 @@ class NotesViewModel(application: Application): AndroidViewModel(application) {
 
     }
 
-    fun  insertNote(note: EntityDataBase) = viewModelScope.launch(Dispatchers.IO){
+    //операции с локальной базой данных
+    fun insertNote(note: EntityDataBase) = viewModelScope.launch(Dispatchers.IO){
         repository.insert(note)
     }
 
@@ -37,6 +40,7 @@ class NotesViewModel(application: Application): AndroidViewModel(application) {
     fun deleteNote(note: EntityDataBase) = viewModelScope.launch(Dispatchers.IO){
         repository.delete(note)
     }
+
 
 
     //операции с Firebase

@@ -26,7 +26,9 @@ class add_notes : AppCompatActivity(){
     private lateinit var oldNoteFirebase: NoteFirebase
     private lateinit var viewModel: NotesViewModel
 
+
     private var isUpdate = false
+    private var isArchived: Boolean = false
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +49,7 @@ class add_notes : AppCompatActivity(){
                 binding.etTitle.setText(oldNote.title)
                 binding.etNote.setText(oldNote.note)
                 isUpdate = true
+                isArchived = oldNote.isArchived
             }
         }catch (e:Exception){
             e.printStackTrace()
@@ -54,9 +57,14 @@ class add_notes : AppCompatActivity(){
 
         if (isUpdate){
             binding.imgDelete.visibility = View.VISIBLE
-        }
-        else{
+        } else{
             binding.imgDelete.visibility = View.INVISIBLE
+        }
+
+        if (isArchived){
+            binding.imgArchive.setImageResource(R.drawable.unarchive)
+        } else {
+            binding.imgArchive.setImageResource(R.drawable.archive)
         }
 
         binding.imgCheck.setOnClickListener {
@@ -80,6 +88,10 @@ class add_notes : AppCompatActivity(){
             onBackPressed()
         }
 
+        binding.imgArchive.setOnClickListener {
+            isArchived = !isArchived
+            saveNote()
+        }
     }
 
     private fun saveNote(){
@@ -92,9 +104,9 @@ class add_notes : AppCompatActivity(){
             val user = FirebaseAuth.getInstance().currentUser
             if (user == null){
                 note = if (isUpdate){
-                    EntityDataBase(oldNote.id,title,noteText,data.format(Date()))
+                    EntityDataBase(oldNote.id,title,noteText,data.format(Date()),isArchived)
                 } else{
-                    EntityDataBase(null, title, noteText, data.format(Date()))
+                    EntityDataBase(null, title, noteText, data.format(Date()),isArchived)
                 }
                 val intent = Intent()
                 intent.putExtra("note",note)

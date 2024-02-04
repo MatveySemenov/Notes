@@ -10,7 +10,7 @@
             android:title="@string/nav_notes" />
         <item
             android:id="@+id/nav_archives"
-            android:icon="@drawable/archive_while"
+            android:icon="@drawable/archive"
             android:title="@string/nav_archives" />
         <item
             android:id="@+id/nav_trash"
