@@ -45,10 +45,10 @@ class NavArchives : Fragment(), NotesAdaptor.NoteClickListener {
 
         if (currentUser != null) {
 
-        } else{
+        } else {
             viewModel.getAllArchivedNotes.observe(viewLifecycleOwner) { list ->
                 list?.let {
-                    val archivedNotes = it.filter { note -> note.isArchived }
+                    val archivedNotes = it.filter { note -> note.isArchived}
                     adapter.updateArchivedNotesList(archivedNotes)
                 }
             }

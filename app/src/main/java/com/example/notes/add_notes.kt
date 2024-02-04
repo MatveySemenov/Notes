@@ -29,6 +29,8 @@ class add_notes : AppCompatActivity(){
 
     private var isUpdate = false
     private var isArchived: Boolean = false
+    private var isDelete: Boolean = false
+
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +52,7 @@ class add_notes : AppCompatActivity(){
                 binding.etNote.setText(oldNote.note)
                 isUpdate = true
                 isArchived = oldNote.isArchived
+                isDelete = oldNote.isDelete
             }
         }catch (e:Exception){
             e.printStackTrace()
@@ -57,9 +60,22 @@ class add_notes : AppCompatActivity(){
 
         if (isUpdate){
             binding.imgDelete.visibility = View.VISIBLE
+
+            if (isDelete){
+                binding.imgCheck.visibility = View.GONE
+                binding.imgArchive.visibility = View.GONE
+                binding.imgDelete.setImageResource(R.drawable.delete_forever)
+                binding.imgRestoreDelete?.visibility = View.VISIBLE
+            } else {
+                binding.imgDelete.setImageResource(R.drawable.delete)
+                binding.imgRestoreDelete?.visibility = View.INVISIBLE
+            }
+
         } else{
             binding.imgDelete.visibility = View.INVISIBLE
+            binding.imgRestoreDelete?.visibility = View.INVISIBLE
         }
+
 
         if (isArchived){
             binding.imgArchive.setImageResource(R.drawable.unarchive)
@@ -67,21 +83,33 @@ class add_notes : AppCompatActivity(){
             binding.imgArchive.setImageResource(R.drawable.archive)
         }
 
+
+        binding.imgRestoreDelete?.setOnClickListener {
+            isDelete = !isDelete
+            saveNote()
+        }
+
         binding.imgCheck.setOnClickListener {
             saveNote()
         }
 
+
         binding.imgDelete.setOnClickListener {
-            val intent = Intent()
-            if (currentUser != null){
-                intent.putExtra("noteFirebase", oldNoteFirebase)
-                intent.putExtra("delete_noteFirebase", true)
+            if (isDelete){
+                val intent = Intent()
+                if (currentUser != null){
+                    intent.putExtra("noteFirebase", oldNoteFirebase)
+                    intent.putExtra("delete_noteFirebase", true)
+                } else {
+                    intent.putExtra("note",oldNote)
+                    intent.putExtra("delete_note", true)
+                }
+                setResult(Activity.RESULT_OK, intent)
+                finish()
             } else {
-                intent.putExtra("note",oldNote)
-                intent.putExtra("delete_note", true)
+                isDelete = !isDelete
+                saveNote()
             }
-            setResult(Activity.RESULT_OK, intent)
-            finish()
         }
 
         binding.imgBackArrow.setOnClickListener {
@@ -92,6 +120,7 @@ class add_notes : AppCompatActivity(){
             isArchived = !isArchived
             saveNote()
         }
+
     }
 
     private fun saveNote(){
@@ -104,9 +133,9 @@ class add_notes : AppCompatActivity(){
             val user = FirebaseAuth.getInstance().currentUser
             if (user == null){
                 note = if (isUpdate){
-                    EntityDataBase(oldNote.id,title,noteText,data.format(Date()),isArchived)
+                    EntityDataBase(oldNote.id,title,noteText,data.format(Date()),isArchived,isDelete)
                 } else{
-                    EntityDataBase(null, title, noteText, data.format(Date()),isArchived)
+                    EntityDataBase(null, title, noteText, data.format(Date()),isArchived,isDelete)
                 }
                 val intent = Intent()
                 intent.putExtra("note",note)

@@ -49,7 +49,7 @@ class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
         } else{
             viewModel.allNotes.observe(viewLifecycleOwner){list ->
                 list?.let {
-                    val activeNotes = it.filter { note -> !note.isArchived }
+                    val activeNotes = it.filter { note -> !note.isArchived && !note.isDelete}
                     adapter.updateList(activeNotes)
                 }
             }

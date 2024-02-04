@@ -56,6 +56,16 @@
                 android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/delete" />
+
+            <ImageView
+                android:id="@+id/img_restore_delete"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_gravity="end"
+                android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/restore_from_trash" />
+
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 

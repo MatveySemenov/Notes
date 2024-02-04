@@ -19,6 +19,8 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
 
     private val notesList = ArrayList<EntityDataBase>()
     private val archivedNotesList = ArrayList<EntityDataBase>()
+    private val deleteNotesList = ArrayList<EntityDataBase>()
+
     private var notesListFirebase: List<NoteFirebase> = emptyList()
     private var isGuestUser: Boolean = false
 
@@ -26,8 +28,6 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
     fun setGuestUser(isGuest:Boolean){
         isGuestUser = isGuest
     }
-
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesAdaptor.NoteViewHolder {
         return NoteViewHolder(
@@ -38,7 +38,7 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
 
     override fun onBindViewHolder(holder: NotesAdaptor.NoteViewHolder, position: Int) {
         when{
-            position < notesList.size && isGuestUser && !notesList[position].isArchived -> {
+            position < notesList.size && isGuestUser && !notesList[position].isArchived && !notesList[position].isDelete-> {
                 // Если заметка из локальной базы и пользователь гость
                 val item = notesList.getOrNull(position)
                 if (item != null){
@@ -51,7 +51,6 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
                         listener.onNoteClicked(notesList[holder.adapterPosition])
                     }
                 }
-                Log.d("ArchivedNotes", "дефолт : $position, Title: ${holder.title.text}, Note: ${holder.note.text}, Date: ${holder.date.text}")
             }
             position < archivedNotesList.size && isGuestUser && archivedNotesList[position].isArchived -> {
                 // Если заметка из локальной базы и пользователь гость
@@ -66,7 +65,21 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
                         listener.onNoteClicked(archivedNotesList[holder.adapterPosition])
                     }
                 }
-                Log.d("ArchivedNotes", "архив : $position, Title: ${holder.title.text}, Note: ${holder.note.text}, Date: ${holder.date.text}")
+            }
+
+            position < deleteNotesList.size && isGuestUser && deleteNotesList[position].isDelete -> {
+                // Если заметка из локальной базы и пользователь гость
+                val item = deleteNotesList.getOrNull(position)
+                if (item != null){
+                    holder.title.text = item.title
+                    holder.title.isSelected = true
+                    holder.note.text = item.note
+                    holder.date.text = item.date
+                    holder.date.isSelected = true
+                    holder.note_layout.setOnClickListener {
+                        listener.onNoteClicked(deleteNotesList[holder.adapterPosition])
+                    }
+                }
             }
 
             position < notesListFirebase.size && !isGuestUser -> {
@@ -87,22 +100,25 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
     }
 
     override fun getItemCount(): Int {
-        return maxOf(notesList.size,notesListFirebase.size,archivedNotesList.size)
+        return maxOf(notesList.size,notesListFirebase.size,archivedNotesList.size,deleteNotesList.size)
     }
 
+    fun updateDeleteNotesList(newList: List<EntityDataBase>){
+        deleteNotesList.clear()
+        deleteNotesList.addAll(newList)
+        notifyDataSetChanged()
+    }
 
     fun updateArchivedNotesList(newList: List<EntityDataBase>){
         archivedNotesList.clear()
         archivedNotesList.addAll(newList)
         notifyDataSetChanged()
-        Log.d("ArchivedNotes", archivedNotesList.toString())
     }
 
     fun updateList(newList: List<EntityDataBase>) {
         notesList.clear()
         notesList.addAll(newList)
         notifyDataSetChanged()
-        Log.d("ArchivedNotes", "заметка -> " + notesList.toString())
     }
 
     fun updateFirebaseList(newList: List<NoteFirebase>){

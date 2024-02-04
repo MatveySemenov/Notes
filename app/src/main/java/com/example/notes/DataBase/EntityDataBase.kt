@@ -11,5 +11,6 @@ data class EntityDataBase (
     @ColumnInfo(name = "title") val title: String?,
     @ColumnInfo(name = "note") val note: String?,
     @ColumnInfo(name = "date") val date: String,
-    @ColumnInfo(name = "isArchived") var isArchived: Boolean
+    @ColumnInfo(name = "isArchived") var isArchived: Boolean,
+    @ColumnInfo(name = "isDelete") var isDelete: Boolean
 ): java.io.Serializable

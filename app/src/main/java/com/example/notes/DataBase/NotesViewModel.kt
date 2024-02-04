@@ -14,6 +14,7 @@ class NotesViewModel(application: Application): AndroidViewModel(application) {
     private val firebaseNotesRepository: FirebaseNotesRepository
     val allNotes: LiveData<List<EntityDataBase>>
     val getAllArchivedNotes: LiveData<List<EntityDataBase>>
+    val getAllDeleteNotes: LiveData<List<EntityDataBase>>
     val firebaseNotes: LiveData<List<NoteFirebase>>
 
     init {
@@ -21,6 +22,7 @@ class NotesViewModel(application: Application): AndroidViewModel(application) {
         repository = NotesRepository(dao)
         allNotes = repository.allNotes
         getAllArchivedNotes = repository.getAllArchivedNotes
+        getAllDeleteNotes = repository.getAllDeleteNotes
 
         // Инициализируем Firebase Repository
         firebaseNotesRepository = FirebaseNotesRepository()
