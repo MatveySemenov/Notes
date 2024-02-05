@@ -22,6 +22,7 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
     private val deleteNotesList = ArrayList<EntityDataBase>()
 
     private var notesListFirebase: List<NoteFirebase> = emptyList()
+    private var archivedNotesListFirebase: List<NoteFirebase> = emptyList()
     private var isGuestUser: Boolean = false
 
     //Метод для установки флага гостевого пользователя
@@ -53,7 +54,7 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
                 }
             }
             position < archivedNotesList.size && isGuestUser && archivedNotesList[position].isArchived -> {
-                // Если заметка из локальной базы и пользователь гость
+                // Если заметка из локальной базы и пользователь гость и архивирована
                 val item = archivedNotesList.getOrNull(position)
                 if (item != null){
                     holder.title.text = item.title
@@ -82,8 +83,8 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
                 }
             }
 
-            position < notesListFirebase.size && !isGuestUser -> {
-                //Если это заметка из Firebase
+            position < notesListFirebase.size && !isGuestUser && !notesListFirebase[position].isArchived-> {
+                //Если это заметка из Firebase не архивирована
                 val item = notesListFirebase.getOrNull(position)
                 if (item != null){
                     holder.title.text = item.title
@@ -96,11 +97,26 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
                     }
                 }
             }
+
+            position < archivedNotesListFirebase.size && !isGuestUser && archivedNotesListFirebase[position].isArchived -> {
+                //Если это заметка из Firebase архивирована
+                val item = archivedNotesListFirebase.getOrNull(position)
+                if (item != null){
+                    holder.title.text = item.title
+                    holder.title.isSelected = true
+                    holder.note.text = item.text
+                    holder.date.text = item.date
+                    holder.date.isSelected = true
+                    holder.note_layout.setOnClickListener {
+                        listener.onNoteClickedFirebase(archivedNotesListFirebase[holder.adapterPosition])
+                    }
+                }
+            }
         }
     }
 
     override fun getItemCount(): Int {
-        return maxOf(notesList.size,notesListFirebase.size,archivedNotesList.size,deleteNotesList.size)
+        return maxOf(notesList.size,notesListFirebase.size,archivedNotesList.size,deleteNotesList.size,archivedNotesListFirebase.size)
     }
 
     fun updateDeleteNotesList(newList: List<EntityDataBase>){
@@ -123,6 +139,11 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
 
     fun updateFirebaseList(newList: List<NoteFirebase>){
         notesListFirebase = newList
+        notifyDataSetChanged()
+    }
+
+    fun updateArchivedNotesListFirebase(newList: List<NoteFirebase>){
+        archivedNotesListFirebase = newList
         notifyDataSetChanged()
     }
 

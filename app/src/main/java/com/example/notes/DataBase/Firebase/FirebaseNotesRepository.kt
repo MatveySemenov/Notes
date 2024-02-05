@@ -1,6 +1,5 @@
 package com.example.notes.DataBase.Firebase
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.notes.ListUser.NoteFirebase
 import com.google.firebase.auth.FirebaseAuth
@@ -8,6 +7,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 class FirebaseNotesRepository {
     val firebaseNotes = MutableLiveData<List<NoteFirebase>>()
+    val getAllArchivedNotesFirebase = MutableLiveData<List<NoteFirebase>>()
 
      fun insertFirebaseNote(note: NoteFirebase) {
          val user = FirebaseAuth.getInstance().currentUser

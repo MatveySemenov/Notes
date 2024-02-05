@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,6 +20,10 @@ import com.example.notes.ListUser.NoteFirebase
 import com.example.notes.add_notes
 import com.example.notes.databinding.NavArchivesBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class NavArchives : Fragment(), NotesAdaptor.NoteClickListener {
 
@@ -44,7 +49,7 @@ class NavArchives : Fragment(), NotesAdaptor.NoteClickListener {
         adapter.setGuestUser(currentUser == null)
 
         if (currentUser != null) {
-
+            readNotesFromFirebase()
         } else {
             viewModel.getAllArchivedNotes.observe(viewLifecycleOwner) { list ->
                 list?.let {
@@ -75,13 +80,26 @@ class NavArchives : Fragment(), NotesAdaptor.NoteClickListener {
     private val UpdateOrDeleteNote =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val note = result.data?.getSerializableExtra("note") as EntityDataBase
-                val isDelete = result.data?.getBooleanExtra("delete_note", false) as Boolean
+                if (currentUser != null){
+                    //Пользователь авторизован, выполняются операции Firebase
+                    val noteFirebase = result.data?.getSerializableExtra("noteFirebase") as NoteFirebase
+                    val isDeleteFirebase = result.data?.getBooleanExtra("delete_noteFirebase",false) as Boolean
 
-                if (!isDelete) {
-                    viewModel.updateNote(note)
-                } else if (isDelete) {
-                    viewModel.deleteNote(note)
+                    if(!isDeleteFirebase){
+                        viewModel.updateFirebaseNote(noteFirebase)
+                    } else {
+                        viewModel.deleteFirebaseNote(noteFirebase)
+                    }
+
+                } else {
+                    val note = result.data?.getSerializableExtra("note") as EntityDataBase
+                    val isDelete = result.data?.getBooleanExtra("delete_note", false) as Boolean
+
+                    if (!isDelete) {
+                        viewModel.updateNote(note)
+                    } else if (isDelete) {
+                        viewModel.deleteNote(note)
+                    }
                 }
             }
         }
@@ -93,7 +111,38 @@ class NavArchives : Fragment(), NotesAdaptor.NoteClickListener {
     }
 
     override fun onNoteClickedFirebase(note: NoteFirebase) {
-        TODO("Not yet implemented")
+        val intent = Intent(requireContext(), add_notes::class.java)
+        intent.putExtra("firebase_note", note)
+        UpdateOrDeleteNote.launch(intent)
+    }
+
+    //выводит архивированные заметки
+    private fun readNotesFromFirebase() {
+        val user = FirebaseAuth.getInstance().currentUser
+        val uid = user?.uid
+
+        if (uid != null) {
+            val notesRef = FirebaseDatabase.getInstance().getReference("notes").child(uid)
+
+            notesRef.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val notesList = mutableListOf<NoteFirebase>()
+
+                    for (noteSnapshot in dataSnapshot.children) {
+                        val note = noteSnapshot.getValue(NoteFirebase::class.java)
+                        note?.let {
+                            notesList.add(it)
+                        }
+                    }
+                    val activityNotesFirebase = notesList.filter { noteFirebase -> noteFirebase.isArchived }
+                    adapter.updateArchivedNotesListFirebase(activityNotesFirebase)
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Toast.makeText(context, "Ошибка чтения заметок", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
     }
 
 }

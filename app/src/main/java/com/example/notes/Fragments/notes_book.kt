@@ -100,15 +100,13 @@ class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
             if (result.resultCode == Activity.RESULT_OK) {
                 if (currentUser != null){
                     //Пользователь авторизован, выполняются операции Firebase
-                    val noteFirebase = result.data?.getSerializableExtra("noteFirebase") as? NoteFirebase
-                    val isDeleteFirebase = result.data?.getBooleanExtra("delete_noteFirebase",false) ?: false
+                    val noteFirebase = result.data?.getSerializableExtra("noteFirebase") as NoteFirebase
+                    val isDeleteFirebase = result.data?.getBooleanExtra("delete_noteFirebase",false) as Boolean
 
-                    if (noteFirebase != null){
-                        if(!isDeleteFirebase){
-                            viewModel.updateFirebaseNote(noteFirebase)
-                        } else {
-                            viewModel.deleteFirebaseNote(noteFirebase)
-                        }
+                    if(!isDeleteFirebase){
+                        viewModel.updateFirebaseNote(noteFirebase)
+                    } else {
+                        viewModel.deleteFirebaseNote(noteFirebase)
                     }
 
                 } else {
@@ -155,7 +153,8 @@ class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
                             notesList.add(it)
                         }
                     }
-                    adapter.updateFirebaseList(notesList)
+                    val activityNotesFirebase = notesList.filter { noteFirebase -> !noteFirebase.isArchived }
+                    adapter.updateFirebaseList(activityNotesFirebase)
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
