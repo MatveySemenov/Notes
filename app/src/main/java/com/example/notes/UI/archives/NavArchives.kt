@@ -134,7 +134,7 @@ class NavArchives : Fragment(), NotesAdaptor.NoteClickListener {
                             notesList.add(it)
                         }
                     }
-                    val activityNotesFirebase = notesList.filter { noteFirebase -> noteFirebase.isArchived }
+                    val activityNotesFirebase = notesList.filter { noteFirebase -> noteFirebase.isArchived && !noteFirebase.isDelete }
                     adapter.updateArchivedNotesListFirebase(activityNotesFirebase)
                 }
 

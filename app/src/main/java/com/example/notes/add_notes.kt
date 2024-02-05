@@ -47,6 +47,7 @@ class add_notes : AppCompatActivity(){
                 binding.etNote.setText(oldNoteFirebase.text)
                 isUpdate = true
                 isArchived = oldNoteFirebase.isArchived
+                isDelete = oldNoteFirebase.isDelete
             } else {
                 oldNote = intent.getSerializableExtra("current_note") as EntityDataBase
                 binding.etTitle.setText(oldNote.title)
@@ -143,9 +144,9 @@ class add_notes : AppCompatActivity(){
                 setResult(Activity.RESULT_OK, intent)
             } else {
                 noteFirebase = if (isUpdate) {
-                    NoteFirebase(oldNoteFirebase.id,title, noteText, data.format(Date()),isArchived)
+                    NoteFirebase(oldNoteFirebase.id,title, noteText, data.format(Date()),isArchived,isDelete)
                 } else {
-                    NoteFirebase("",title, noteText, data.format(Date()),isArchived)
+                    NoteFirebase("",title, noteText, data.format(Date()),isArchived,isDelete)
                 }
                 val intent = Intent()
                 intent.putExtra("noteFirebase", noteFirebase)

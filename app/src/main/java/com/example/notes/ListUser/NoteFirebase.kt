@@ -7,5 +7,6 @@ class NoteFirebase(
     var title: String = "",
     var text: String = "",
     var date: String = "",
-    var isArchived: Boolean = false
+    var isArchived: Boolean = false,
+    var isDelete: Boolean = false
 ) : Serializable

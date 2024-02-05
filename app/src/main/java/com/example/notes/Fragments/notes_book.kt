@@ -153,7 +153,7 @@ class notes_book: Fragment(), NotesAdaptor.NoteClickListener {
                             notesList.add(it)
                         }
                     }
-                    val activityNotesFirebase = notesList.filter { noteFirebase -> !noteFirebase.isArchived }
+                    val activityNotesFirebase = notesList.filter { noteFirebase -> !noteFirebase.isArchived && !noteFirebase.isDelete }
                     adapter.updateFirebaseList(activityNotesFirebase)
                 }
 

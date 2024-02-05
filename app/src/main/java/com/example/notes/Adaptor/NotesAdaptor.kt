@@ -23,6 +23,7 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
 
     private var notesListFirebase: List<NoteFirebase> = emptyList()
     private var archivedNotesListFirebase: List<NoteFirebase> = emptyList()
+    private var deleteNotesListFirebase: List<NoteFirebase> = emptyList()
     private var isGuestUser: Boolean = false
 
     //Метод для установки флага гостевого пользователя
@@ -83,7 +84,7 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
                 }
             }
 
-            position < notesListFirebase.size && !isGuestUser && !notesListFirebase[position].isArchived-> {
+            position < notesListFirebase.size && !isGuestUser && !notesListFirebase[position].isArchived && !notesListFirebase[position].isDelete-> {
                 //Если это заметка из Firebase не архивирована
                 val item = notesListFirebase.getOrNull(position)
                 if (item != null){
@@ -112,11 +113,28 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
                     }
                 }
             }
+
+            position < deleteNotesListFirebase.size && !isGuestUser && deleteNotesListFirebase[position].isDelete -> {
+                //Если это заметка из Firebase архивирована
+                val item = deleteNotesListFirebase.getOrNull(position)
+                if (item != null){
+                    holder.title.text = item.title
+                    holder.title.isSelected = true
+                    holder.note.text = item.text
+                    holder.date.text = item.date
+                    holder.date.isSelected = true
+                    holder.note_layout.setOnClickListener {
+                        listener.onNoteClickedFirebase(deleteNotesListFirebase[holder.adapterPosition])
+                    }
+                }
+            }
+
+
         }
     }
 
     override fun getItemCount(): Int {
-        return maxOf(notesList.size,notesListFirebase.size,archivedNotesList.size,deleteNotesList.size,archivedNotesListFirebase.size)
+        return maxOf(notesList.size,notesListFirebase.size,archivedNotesList.size,deleteNotesList.size,archivedNotesListFirebase.size,deleteNotesListFirebase.size)
     }
 
     fun updateDeleteNotesList(newList: List<EntityDataBase>){
@@ -144,6 +162,11 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
 
     fun updateArchivedNotesListFirebase(newList: List<NoteFirebase>){
         archivedNotesListFirebase = newList
+        notifyDataSetChanged()
+    }
+
+    fun updateDeleteNotesListFirebase(newList: List<NoteFirebase>){
+        deleteNotesListFirebase = newList
         notifyDataSetChanged()
     }
 

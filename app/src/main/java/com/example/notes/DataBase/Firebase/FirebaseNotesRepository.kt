@@ -8,6 +8,7 @@ import com.google.firebase.database.FirebaseDatabase
 class FirebaseNotesRepository {
     val firebaseNotes = MutableLiveData<List<NoteFirebase>>()
     val getAllArchivedNotesFirebase = MutableLiveData<List<NoteFirebase>>()
+    val getAllDeleteNotesFirebase = MutableLiveData<List<NoteFirebase>>()
 
      fun insertFirebaseNote(note: NoteFirebase) {
          val user = FirebaseAuth.getInstance().currentUser
