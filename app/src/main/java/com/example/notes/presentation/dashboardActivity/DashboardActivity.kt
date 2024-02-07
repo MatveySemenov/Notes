@@ -22,7 +22,9 @@ import com.example.notes.presentation.ui.NavSettings
 import com.example.notes.databinding.ActivityDashboardBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DashboardActivity : AppCompatActivity(), UserDataChangeListener {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityDashboardBinding

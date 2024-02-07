@@ -17,52 +17,35 @@ import com.example.notes.domain.useCases.Server.FirebaseDeleteFromDBUseCase
 import com.example.notes.domain.useCases.Server.FirebaseGetAllNotesListUseCase
 import com.example.notes.domain.useCases.Server.FirebaseInsertToDBUseCase
 import com.example.notes.domain.useCases.Server.FirebaseUpdateDBUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NotesViewModel(application: Application): AndroidViewModel(application) {
+@HiltViewModel
+class NotesViewModel @Inject constructor(
+    application: Application,
+    //локальная бд
+    private val deleteFromDBUseCase: DeleteFromDBUseCase,
+    private val getAllNotesListUseCase: GetAllNotesListUseCase,
+    private val insertToDBUseCase: InsertToDBUseCase,
+    private val updateDBUseCase: UpdateDBUseCase,
+    //серверная бд
+    private val firebaseDeleteFromDBUseCase: FirebaseDeleteFromDBUseCase,
+    private val firebaseGetAllNotesListUseCase: FirebaseGetAllNotesListUseCase,
+    private val firebaseInsertToDBUseCase: FirebaseInsertToDBUseCase,
+    private val firebaseUpdateDBUseCase: FirebaseUpdateDBUseCase,
+): AndroidViewModel(application){
     //Локальная база данных
-    private val repository: NotesRepositoryImpl
-    val allNotes: LiveData<List<NotesDomain>>
-    val getAllArchivedNotes: LiveData<List<NotesDomain>>
-    val getAllDeleteNotes: LiveData<List<NotesDomain>>
-    private val deleteFromDBUseCase: DeleteFromDBUseCase
-    private val getAllNotesListUseCase: GetAllNotesListUseCase
-    private val insertToDBUseCase: InsertToDBUseCase
-    private val updateDBUseCase: UpdateDBUseCase
+    val allNotes: LiveData<List<NotesDomain>> = getAllNotesListUseCase.executeNotes()
+    val getAllArchivedNotes: LiveData<List<NotesDomain>> = getAllNotesListUseCase.executeArchived()
+    val getAllDeleteNotes: LiveData<List<NotesDomain>> = getAllNotesListUseCase.executeDelete()
 
     //Серверная база данных
-    private val firebaseNotesRepository: FirebaseNotesRepositoryImpl
-    val firebaseNotes: LiveData<List<NoteFirebase>>
-    val getAllArchivedNotesFirebase: LiveData<List<NoteFirebase>>
-    val getAllDeleteNotesFirebase: LiveData<List<NoteFirebase>>
-    private val firebaseDeleteFromDBUseCase: FirebaseDeleteFromDBUseCase
-    private val firebaseGetAllNotesListUseCase: FirebaseGetAllNotesListUseCase
-    private val firebaseInsertToDBUseCase: FirebaseInsertToDBUseCase
-    private val firebaseUpdateDBUseCase: FirebaseUpdateDBUseCase
+    val firebaseNotes: LiveData<List<NoteFirebase>> = firebaseGetAllNotesListUseCase.firebaseExecuteNotes()
+    val getAllArchivedNotesFirebase: LiveData<List<NoteFirebase>> = firebaseGetAllNotesListUseCase.firebaseExecuteArchived()
+    val getAllDeleteNotesFirebase: LiveData<List<NoteFirebase>> = firebaseGetAllNotesListUseCase.firebaseExecuteDelete()
 
-    init {
-        val dao = NotesDataBase.getDataBase(application).notesDao()
-        repository = NotesRepositoryImpl(dao)
-        deleteFromDBUseCase = DeleteFromDBUseCase(repository)
-        getAllNotesListUseCase = GetAllNotesListUseCase(repository)
-        insertToDBUseCase = InsertToDBUseCase(repository)
-        updateDBUseCase = UpdateDBUseCase(repository)
-        allNotes = getAllNotesListUseCase.executeNotes()
-        getAllArchivedNotes = getAllNotesListUseCase.executeArchived()
-        getAllDeleteNotes = getAllNotesListUseCase.executeDelete()
-
-        // Инициализируем Firebase Repository
-        firebaseNotesRepository = FirebaseNotesRepositoryImpl()
-        firebaseDeleteFromDBUseCase = FirebaseDeleteFromDBUseCase(firebaseNotesRepository)
-        firebaseGetAllNotesListUseCase = FirebaseGetAllNotesListUseCase(firebaseNotesRepository)
-        firebaseInsertToDBUseCase = FirebaseInsertToDBUseCase(firebaseNotesRepository)
-        firebaseUpdateDBUseCase = FirebaseUpdateDBUseCase(firebaseNotesRepository)
-        firebaseNotes = firebaseGetAllNotesListUseCase.firebaseExecuteNotes()
-        getAllArchivedNotesFirebase = firebaseGetAllNotesListUseCase.firebaseExecuteArchived()
-        getAllDeleteNotesFirebase = firebaseGetAllNotesListUseCase.firebaseExecuteDelete()
-
-    }
 
     //операции с локальной базой данных
     fun insertNote(note: NotesDomain) = viewModelScope.launch(Dispatchers.IO){
@@ -87,5 +70,4 @@ class NotesViewModel(application: Application): AndroidViewModel(application) {
     fun deleteFirebaseNote(note: NoteFirebase) = viewModelScope.launch(Dispatchers.IO) {
         firebaseDeleteFromDBUseCase.firebaseExecute(note)
     }
-
 }

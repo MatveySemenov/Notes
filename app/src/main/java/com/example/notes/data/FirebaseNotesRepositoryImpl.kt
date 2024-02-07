@@ -27,7 +27,7 @@ class FirebaseNotesRepositoryImpl: FirebaseNotesRepository {
         val user = FirebaseAuth.getInstance().currentUser
         user?.let {
             val uid = it.uid
-            val notesRef = FirebaseDatabase.getInstance().getReference("notes").child(uid).child(note.id)
+            val notesRef = FirebaseDatabase.getInstance().getReference("notes").child(uid).child(note.id!!)
             notesRef.setValue(note)
         }
     }
@@ -36,7 +36,9 @@ class FirebaseNotesRepositoryImpl: FirebaseNotesRepository {
         val user = FirebaseAuth.getInstance().currentUser
         user?.let {
             val uid = it.uid
-            val notesRef = FirebaseDatabase.getInstance().getReference("notes").child(uid).child(note.id)
+            val notesRef = FirebaseDatabase.getInstance().getReference("notes").child(uid).child(
+                note.id!!
+            )
             notesRef.removeValue()
         }
     }

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notes.presentation.adapters.NotesAdaptor
@@ -22,12 +23,14 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NotesBook: Fragment(), NotesAdaptor.NoteClickListener {
 
     private lateinit var binding: NotesBookBinding
     private lateinit var database: NotesDataBase
-    private lateinit var viewModel: NotesViewModel
+    private val viewModel: NotesViewModel by viewModels()
     private lateinit var adapter: NotesAdaptor
 
     private val currentUser = FirebaseAuth.getInstance().currentUser
@@ -66,11 +69,6 @@ class NotesBook: Fragment(), NotesAdaptor.NoteClickListener {
 
         adapter = NotesAdaptor(requireContext(), this)
         binding.recyclerView.adapter = adapter
-
-        //инициализируем viewModel
-        viewModel = ViewModelProvider(this,
-            ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-        )[NotesViewModel::class.java]
 
         val getContent =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
