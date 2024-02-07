@@ -1,4 +1,4 @@
-package com.example.notes.presentation.fragments
+package com.example.notes.presentation.notesViewModel
 
 import android.app.Activity
 import android.content.Intent
@@ -12,11 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notes.presentation.adapters.NotesAdaptor
-import com.example.notes.data.database.EntityDataBase
 import com.example.notes.data.database.NotesDataBase
-import com.example.notes.NotesViewModel
 import com.example.notes.data.databaseFirebase.NoteFirebase
-import com.example.notes.AddNotes
+import com.example.notes.presentation.addNotes.AddNotes
 import com.example.notes.databinding.NotesBookBinding
 import com.example.notes.domain.models.NotesDomain
 import com.google.firebase.auth.FirebaseAuth
@@ -72,7 +70,7 @@ class NotesBook: Fragment(), NotesAdaptor.NoteClickListener {
         //инициализируем viewModel
         viewModel = ViewModelProvider(this,
             ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().application)
-        ).get(NotesViewModel::class.java)
+        )[NotesViewModel::class.java]
 
         val getContent =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

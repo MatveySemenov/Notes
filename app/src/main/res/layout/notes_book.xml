@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorOnPrimary"
-    tools:context=".presentation.fragments.NotesBook">
+    tools:context=".presentation.notesViewModel.NotesBook">
 
     <ImageView
         android:id="@+id/add_note"

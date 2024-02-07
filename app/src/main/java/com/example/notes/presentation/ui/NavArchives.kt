@@ -12,10 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notes.presentation.adapters.NotesAdaptor
-import com.example.notes.data.database.EntityDataBase
-import com.example.notes.NotesViewModel
+import com.example.notes.presentation.notesViewModel.NotesViewModel
 import com.example.notes.data.databaseFirebase.NoteFirebase
-import com.example.notes.AddNotes
+import com.example.notes.presentation.addNotes.AddNotes
 import com.example.notes.databinding.NavArchivesBinding
 import com.example.notes.domain.models.NotesDomain
 import com.google.firebase.auth.FirebaseAuth

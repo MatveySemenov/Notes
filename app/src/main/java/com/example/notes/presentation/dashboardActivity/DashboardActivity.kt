@@ -1,4 +1,4 @@
-package com.example.notes
+package com.example.notes.presentation.dashboardActivity
 
 import android.content.Context
 import android.content.Intent
@@ -14,6 +14,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.notes.AppPreferences
+import com.example.notes.R
+import com.example.notes.UserDataChangeListener
 import com.example.notes.presentation.ui.NavAbout
 import com.example.notes.presentation.ui.NavSettings
 import com.example.notes.databinding.ActivityDashboardBinding

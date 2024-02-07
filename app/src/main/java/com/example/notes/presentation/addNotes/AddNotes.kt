@@ -1,4 +1,4 @@
-package com.example.notes
+package com.example.notes.presentation.addNotes
 
 import android.app.Activity
 import android.content.Intent
@@ -7,7 +7,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.notes.data.database.EntityDataBase
+import com.example.notes.R
 import com.example.notes.data.databaseFirebase.NoteFirebase
 import com.example.notes.databinding.AddNotesBinding
 import com.example.notes.domain.models.NotesDomain
@@ -18,14 +18,8 @@ import java.util.*
 class AddNotes : AppCompatActivity(){
 
     private lateinit var binding: AddNotesBinding
-    private lateinit var note: NotesDomain
-    private lateinit var oldNote: NotesDomain
-
-    private lateinit var noteFirebase: NoteFirebase
-    private lateinit var oldNoteFirebase: NoteFirebase
-
+    private lateinit var viewModel: AddNotesViewModel
     private val currentUser = FirebaseAuth.getInstance().currentUser
-
     private var isUpdate = false
     private var isArchived: Boolean = false
     private var isDelete: Boolean = false
@@ -36,17 +30,21 @@ class AddNotes : AppCompatActivity(){
         binding = AddNotesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel = ViewModelProvider(this)[AddNotesViewModel::class.java]
+
 
         try{
             if (currentUser != null){
-                oldNoteFirebase = intent.getSerializableExtra("firebase_note") as NoteFirebase
+                val oldNoteFirebase = intent.getSerializableExtra("firebase_note") as NoteFirebase
+                viewModel.setNoteFirebaseData(oldNoteFirebase)
                 binding.etTitle.setText(oldNoteFirebase.title)
                 binding.etNote.setText(oldNoteFirebase.text)
                 isUpdate = true
                 isArchived = oldNoteFirebase.isArchived
                 isDelete = oldNoteFirebase.isDelete
             } else {
-                oldNote = intent.getSerializableExtra("current_note") as NotesDomain
+                val oldNote = intent.getSerializableExtra("current_note") as NotesDomain
+                viewModel.setNoteData(oldNote)
                 binding.etTitle.setText(oldNote.title)
                 binding.etNote.setText(oldNote.note)
                 isUpdate = true
@@ -94,21 +92,7 @@ class AddNotes : AppCompatActivity(){
 
 
         binding.imgDelete.setOnClickListener {
-            if (isDelete){
-                val intent = Intent()
-                if (currentUser != null){
-                    intent.putExtra("noteFirebase", oldNoteFirebase)
-                    intent.putExtra("delete_noteFirebase", true)
-                } else {
-                    intent.putExtra("note",oldNote)
-                    intent.putExtra("delete_note", true)
-                }
-                setResult(Activity.RESULT_OK, intent)
-                finish()
-            } else {
-                isDelete = !isDelete
-                saveNote()
-            }
+            deleteNote()
         }
 
         binding.imgBackArrow.setOnClickListener {
@@ -122,6 +106,26 @@ class AddNotes : AppCompatActivity(){
 
     }
 
+    private fun deleteNote(){
+        if (isDelete){
+            val oldNote = viewModel.note.value
+            val oldNoteFirebase = viewModel.noteFirebase.value
+            val intent = Intent()
+            if (currentUser != null){
+                intent.putExtra("noteFirebase", oldNoteFirebase)
+                intent.putExtra("delete_noteFirebase", true)
+            } else {
+                intent.putExtra("note",oldNote)
+                intent.putExtra("delete_note", true)
+            }
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        } else {
+            isDelete = !isDelete
+            saveNote()
+        }
+    }
+
     private fun saveNote(){
         val title = binding.etTitle.text.toString()
         val noteText = binding.etNote.text.toString()
@@ -131,22 +135,26 @@ class AddNotes : AppCompatActivity(){
 
             val user = FirebaseAuth.getInstance().currentUser
             if (user == null){
-                note = if (isUpdate){
-                    NotesDomain(oldNote.id,title,noteText,data.format(Date()),isArchived,isDelete)
-                } else{
-                    NotesDomain(null, title, noteText, data.format(Date()),isArchived,isDelete)
+                if (isUpdate){
+                    val updateNotes = NotesDomain(viewModel.note.value?.id,title,noteText,data.format(Date()),isArchived,isDelete)
+                    viewModel.setNoteData(updateNotes)
+                } else {
+                    val newNotes = NotesDomain(null, title, noteText, data.format(Date()),isArchived,isDelete)
+                    viewModel.setNoteData(newNotes)
                 }
                 val intent = Intent()
-                intent.putExtra("note",note)
+                intent.putExtra("note",viewModel.note.value)
                 setResult(Activity.RESULT_OK, intent)
             } else {
-                noteFirebase = if (isUpdate) {
-                    NoteFirebase(oldNoteFirebase.id,title, noteText, data.format(Date()),isArchived,isDelete)
+                if (isUpdate) {
+                    val updateNotesFirebase = NoteFirebase(viewModel.noteFirebase.value?.id,title, noteText, data.format(Date()),isArchived,isDelete)
+                    viewModel.setNoteFirebaseData(updateNotesFirebase)
                 } else {
-                    NoteFirebase("",title, noteText, data.format(Date()),isArchived,isDelete)
+                    val newNotesFirebase = NoteFirebase("",title, noteText, data.format(Date()),isArchived,isDelete)
+                    viewModel.setNoteFirebaseData(newNotesFirebase)
                 }
                 val intent = Intent()
-                intent.putExtra("noteFirebase", noteFirebase)
+                intent.putExtra("noteFirebase", viewModel.noteFirebase.value)
                 setResult(Activity.RESULT_OK, intent)
             }
             finish()

@@ -14,7 +14,7 @@
         android:theme="@style/Theme.Notes"
         tools:targetApi="31">
         <activity
-            android:name=".DashboardActivity"
+            android:name=".presentation.dashboardActivity.DashboardActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,7 @@
             android:name=".presentation.ui.NavAbout"
             android:exported="false" />
         <activity
-            android:name=".AddNotes"
+            android:name=".presentation.addNotes.AddNotes"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
