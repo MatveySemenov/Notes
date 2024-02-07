@@ -2,11 +2,10 @@ package com.example.notes.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import com.example.notes.data.database.EntityDataBase
 import com.example.notes.domain.NotesRepository
 import com.example.notes.domain.mappers.toDomainModel
 import com.example.notes.domain.mappers.toEntity
-import com.example.notes.domain.models.DaoNotes
+import com.example.notes.data.database.DaoNotes
 import com.example.notes.domain.models.NotesDomain
 
 //Класс репозитория который принимает интерфейс DaoNotes
