@@ -6,9 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.notes.data.databaseFirebase.NoteFirebase
 import com.example.notes.domain.models.NotesDomain
-import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class AddNotesViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class AddNotesViewModel @Inject constructor(application: Application) : AndroidViewModel(application) {
 
     private val _note = MutableLiveData<NotesDomain?>()
     val note: LiveData<NotesDomain?> = _note

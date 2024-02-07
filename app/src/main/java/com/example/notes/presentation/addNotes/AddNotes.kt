@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.notes.R
@@ -12,13 +13,15 @@ import com.example.notes.data.databaseFirebase.NoteFirebase
 import com.example.notes.databinding.AddNotesBinding
 import com.example.notes.domain.models.NotesDomain
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
+@AndroidEntryPoint
 class AddNotes : AppCompatActivity(){
 
     private lateinit var binding: AddNotesBinding
-    private lateinit var viewModel: AddNotesViewModel
+    private val viewModel: AddNotesViewModel by viewModels()
     private val currentUser = FirebaseAuth.getInstance().currentUser
     private var isUpdate = false
     private var isArchived: Boolean = false
@@ -29,9 +32,6 @@ class AddNotes : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = AddNotesBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        viewModel = ViewModelProvider(this)[AddNotesViewModel::class.java]
-
 
         try{
             if (currentUser != null){

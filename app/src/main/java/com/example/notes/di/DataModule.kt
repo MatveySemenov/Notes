@@ -7,6 +7,7 @@ import com.example.notes.data.database.DaoNotes
 import com.example.notes.data.database.NotesDataBase
 import com.example.notes.domain.FirebaseNotesRepository
 import com.example.notes.domain.NotesRepository
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,4 +44,9 @@ class DataModule {
         return FirebaseNotesRepositoryImpl()
     }
 
+    @Singleton
+    @Provides
+    fun provideFirebase(): FirebaseAuth{
+        return FirebaseAuth.getInstance()
+    }
 }

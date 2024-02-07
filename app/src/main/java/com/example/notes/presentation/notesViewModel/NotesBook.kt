@@ -29,7 +29,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class NotesBook: Fragment(), NotesAdaptor.NoteClickListener {
 
     private lateinit var binding: NotesBookBinding
-    private lateinit var database: NotesDataBase
     private val viewModel: NotesViewModel by viewModels()
     private lateinit var adapter: NotesAdaptor
 
@@ -57,7 +56,6 @@ class NotesBook: Fragment(), NotesAdaptor.NoteClickListener {
                 }
             }
         }
-        database = NotesDataBase.getDataBase(requireContext())
     }
 
 

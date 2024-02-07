@@ -11,10 +11,14 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.notes.R
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoadingApp : Fragment() {
 
-    private lateinit var mAuth: FirebaseAuth
+    @Inject
+    lateinit var mAuth: FirebaseAuth
     private lateinit var navController: NavController
 
 
@@ -43,7 +47,6 @@ class LoadingApp : Fragment() {
     }
 
     private fun init(view: View) {
-        mAuth = FirebaseAuth.getInstance()
         navController = Navigation.findNavController(view)
     }
 }

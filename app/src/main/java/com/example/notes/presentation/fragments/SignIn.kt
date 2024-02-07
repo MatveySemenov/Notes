@@ -15,15 +15,18 @@ import com.example.notes.*
 import com.example.notes.databinding.SignInBinding
 import com.example.notes.presentation.ExitApp
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class SignIn() : Fragment(){
 
     private lateinit var navController: NavController
-    private lateinit var mAuth: FirebaseAuth
     private lateinit var binding: SignInBinding
     private lateinit var progressBar: ProgressBar
     private lateinit var exitApp: ExitApp
+    @Inject
+    lateinit var mAuth:FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -125,6 +128,5 @@ class SignIn() : Fragment(){
 
     private fun init(view: View){
         navController = Navigation.findNavController(view)
-        mAuth = FirebaseAuth.getInstance()
     }
 }

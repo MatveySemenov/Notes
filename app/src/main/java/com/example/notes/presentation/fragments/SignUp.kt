@@ -19,14 +19,18 @@ import com.example.notes.databinding.SignUpBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SignUp : Fragment() {
 
     private lateinit var navController: NavController
-    private lateinit var mAuth: FirebaseAuth
     private lateinit var binding: SignUpBinding
     private lateinit var progressBar: ProgressBar
     private lateinit var exitApp: ExitApp
+    @Inject
+    lateinit var mAuth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -146,6 +150,5 @@ class SignUp : Fragment() {
 
     private fun init(view: View) {
         navController = Navigation.findNavController(view)
-        mAuth = FirebaseAuth.getInstance()
     }
 }
