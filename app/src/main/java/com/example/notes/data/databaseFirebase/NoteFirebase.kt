@@ -1,4 +1,4 @@
-package com.example.notes.ListUser
+package com.example.notes.data.databaseFirebase
 
 import java.io.Serializable
 

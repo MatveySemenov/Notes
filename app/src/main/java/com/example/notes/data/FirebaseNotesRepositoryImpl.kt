@@ -1,11 +1,12 @@
-package com.example.notes.DataBase.Firebase
+package com.example.notes.data
 
 import androidx.lifecycle.MutableLiveData
-import com.example.notes.ListUser.NoteFirebase
+import com.example.notes.data.databaseFirebase.NoteFirebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-class FirebaseNotesRepository {
+class FirebaseNotesRepositoryImpl {
+
     val firebaseNotes = MutableLiveData<List<NoteFirebase>>()
     val getAllArchivedNotesFirebase = MutableLiveData<List<NoteFirebase>>()
     val getAllDeleteNotesFirebase = MutableLiveData<List<NoteFirebase>>()

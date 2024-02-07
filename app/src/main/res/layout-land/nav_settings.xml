@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="?attr/colorOnPrimary"
-    tools:context=".UI.settings.nav_settings">
+    tools:context=".presentation.ui.NavSettings">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/relativeLayout"

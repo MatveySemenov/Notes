@@ -1,4 +1,4 @@
-package com.example.notes.Fragments
+package com.example.notes.presentation.fragments
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
@@ -12,7 +12,7 @@ import androidx.navigation.Navigation
 import com.example.notes.R
 import com.google.firebase.auth.FirebaseAuth
 
-class loading_app : Fragment() {
+class LoadingApp : Fragment() {
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var navController: NavController

@@ -1,4 +1,4 @@
-package com.example.notes.UI.trash
+package com.example.notes.presentation.ui
 
 import android.app.Activity
 import android.content.Intent
@@ -11,12 +11,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.notes.Adaptor.NotesAdaptor
-import com.example.notes.DataBase.EntityDataBase
-import com.example.notes.DataBase.NotesViewModel
-import com.example.notes.ListUser.NoteFirebase
-import com.example.notes.add_notes
+import com.example.notes.presentation.adapters.NotesAdaptor
+import com.example.notes.data.database.EntityDataBase
+import com.example.notes.NotesViewModel
+import com.example.notes.data.databaseFirebase.NoteFirebase
+import com.example.notes.AddNotes
 import com.example.notes.databinding.NavTrashBinding
+import com.example.notes.domain.models.NotesDomain
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -90,7 +91,7 @@ class NavTrash: Fragment(), NotesAdaptor.NoteClickListener {
                     }
 
                 } else {
-                    val note = result.data?.getSerializableExtra("note") as EntityDataBase
+                    val note = result.data?.getSerializableExtra("note") as NotesDomain
                     val isDelete = result.data?.getBooleanExtra("delete_note", false) as Boolean
 
                     if (!isDelete) {
@@ -102,14 +103,14 @@ class NavTrash: Fragment(), NotesAdaptor.NoteClickListener {
             }
         }
 
-    override fun onNoteClicked(note: EntityDataBase) {
-        val intent = Intent(requireContext(), add_notes::class.java)
+    override fun onNoteClicked(note: NotesDomain) {
+        val intent = Intent(requireContext(), AddNotes::class.java)
         intent.putExtra("current_note", note)
         UpdateOrDeleteNote.launch(intent)
     }
 
     override fun onNoteClickedFirebase(note: NoteFirebase) {
-        val intent = Intent(requireContext(), add_notes::class.java)
+        val intent = Intent(requireContext(), AddNotes::class.java)
         intent.putExtra("firebase_note", note)
         UpdateOrDeleteNote.launch(intent)
     }

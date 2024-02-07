@@ -1,4 +1,4 @@
-package com.example.notes.UI.settings
+package com.example.notes.presentation.ui
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.notes.databinding.NavSettingsBinding
 
-class nav_settings: AppCompatActivity() {
+class NavSettings: AppCompatActivity() {
 
     private lateinit var binding: NavSettingsBinding
     private lateinit var themeField: TextView

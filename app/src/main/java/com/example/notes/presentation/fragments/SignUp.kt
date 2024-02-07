@@ -1,4 +1,4 @@
-package com.example.notes.Fragments
+package com.example.notes.presentation.fragments
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
@@ -11,8 +11,8 @@ import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.notes.AppPreferences
-import com.example.notes.ExitApp
-import com.example.notes.ListUser.User
+import com.example.notes.presentation.ExitApp
+import com.example.notes.data.databaseFirebase.User
 import com.example.notes.R
 import com.example.notes.UserDataChangeListener
 import com.example.notes.databinding.SignUpBinding
@@ -20,7 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-class sign_up : Fragment() {
+class SignUp : Fragment() {
 
     private lateinit var navController: NavController
     private lateinit var mAuth: FirebaseAuth

@@ -14,8 +14,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.example.notes.UI.about.NavAbout
-import com.example.notes.UI.settings.nav_settings
+import com.example.notes.presentation.ui.NavAbout
+import com.example.notes.presentation.ui.NavSettings
 import com.example.notes.databinding.ActivityDashboardBinding
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -94,7 +94,7 @@ class DashboardActivity : AppCompatActivity(), UserDataChangeListener {
                 }
                 //Обработчик нажатия на элемент меню "Настройки"
                 R.id.nav_settings -> {
-                    startActivity(Intent(this, nav_settings::class.java))
+                    startActivity(Intent(this, NavSettings::class.java))
                     drawerLayout.closeDrawer(GravityCompat.START)
                     return@setNavigationItemSelectedListener true
                 }

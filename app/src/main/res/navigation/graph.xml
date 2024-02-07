@@ -6,7 +6,7 @@
     app:startDestination="@id/loading_app">
     <fragment
         android:id="@+id/loading_app"
-        android:name="com.example.notes.Fragments.loading_app"
+        android:name="com.example.notes.presentation.fragments.LoadingApp"
         android:label="loading_app"
         tools:layout="@layout/loading_app" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/sign_in"
-        android:name="com.example.notes.Fragments.sign_in"
+        android:name="com.example.notes.presentation.fragments.SignIn"
         android:label="sign_in"
         tools:layout="@layout/sign_in" >
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/sign_up"
-        android:name="com.example.notes.Fragments.sign_up"
+        android:name="com.example.notes.presentation.fragments.SignUp"
         android:label="sign_up"
         tools:layout="@layout/sign_up" >
         <action
@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/notes_book"
-        android:name="com.example.notes.Fragments.notes_book"
+        android:name="com.example.notes.presentation.fragments.NotesBook"
         android:label="Заметки"
         tools:layout="@layout/notes_book" >
         <action
@@ -51,16 +51,16 @@
     </fragment>
     <activity
         android:id="@+id/nav_about"
-        android:name="com.example.notes.UI.about.NavAbout"
+        android:name="com.example.notes.presentation.ui.NavAbout"
         android:label="О приложении" />
     <activity
         android:id="@+id/nav_settings"
-        android:name="com.example.notes.UI.settings.nav_settings"
+        android:name="com.example.notes.presentation.ui.NavSettings"
         android:label="Настройки"
         tools:layout="@layout/nav_settings" />
     <fragment
         android:id="@+id/nav_archives"
-        android:name="com.example.notes.UI.archives.NavArchives"
+        android:name="com.example.notes.presentation.ui.NavArchives"
         android:label="Архив"
         tools:layout="@layout/nav_archives" >
         <action
@@ -69,7 +69,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_trash"
-        android:name="com.example.notes.UI.trash.NavTrash"
+        android:name="com.example.notes.presentation.ui.NavTrash"
         android:label="Корзина"
         tools:layout="@layout/nav_trash" >
         <action

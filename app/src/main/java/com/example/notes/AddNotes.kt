@@ -7,38 +7,35 @@ import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.notes.DataBase.EntityDataBase
-import com.example.notes.DataBase.NotesViewModel
-import com.example.notes.ListUser.NoteFirebase
+import com.example.notes.data.database.EntityDataBase
+import com.example.notes.data.databaseFirebase.NoteFirebase
 import com.example.notes.databinding.AddNotesBinding
+import com.example.notes.domain.models.NotesDomain
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
 import java.text.SimpleDateFormat
 import java.util.*
 
-class add_notes : AppCompatActivity(){
+class AddNotes : AppCompatActivity(){
 
     private lateinit var binding: AddNotesBinding
-    private lateinit var note: EntityDataBase
-    private lateinit var oldNote: EntityDataBase
+    private lateinit var note: NotesDomain
+    private lateinit var oldNote: NotesDomain
 
     private lateinit var noteFirebase: NoteFirebase
     private lateinit var oldNoteFirebase: NoteFirebase
-    private lateinit var viewModel: NotesViewModel
 
+    private val currentUser = FirebaseAuth.getInstance().currentUser
 
     private var isUpdate = false
     private var isArchived: Boolean = false
     private var isDelete: Boolean = false
 
-    private val currentUser = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = AddNotesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this).get(NotesViewModel::class.java)  // Инициализируйте ViewModel
 
         try{
             if (currentUser != null){
@@ -49,7 +46,7 @@ class add_notes : AppCompatActivity(){
                 isArchived = oldNoteFirebase.isArchived
                 isDelete = oldNoteFirebase.isDelete
             } else {
-                oldNote = intent.getSerializableExtra("current_note") as EntityDataBase
+                oldNote = intent.getSerializableExtra("current_note") as NotesDomain
                 binding.etTitle.setText(oldNote.title)
                 binding.etNote.setText(oldNote.note)
                 isUpdate = true
@@ -135,9 +132,9 @@ class add_notes : AppCompatActivity(){
             val user = FirebaseAuth.getInstance().currentUser
             if (user == null){
                 note = if (isUpdate){
-                    EntityDataBase(oldNote.id,title,noteText,data.format(Date()),isArchived,isDelete)
+                    NotesDomain(oldNote.id,title,noteText,data.format(Date()),isArchived,isDelete)
                 } else{
-                    EntityDataBase(null, title, noteText, data.format(Date()),isArchived,isDelete)
+                    NotesDomain(null, title, noteText, data.format(Date()),isArchived,isDelete)
                 }
                 val intent = Intent()
                 intent.putExtra("note",note)
@@ -155,7 +152,7 @@ class add_notes : AppCompatActivity(){
             finish()
         }
         else{
-            Toast.makeText(this@add_notes,"Введите данные", Toast.LENGTH_LONG).show()
+            Toast.makeText(this@AddNotes,"Введите данные", Toast.LENGTH_LONG).show()
         }
     }
 }

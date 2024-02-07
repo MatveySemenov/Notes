@@ -22,16 +22,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UI.about.NavAbout"
+            android:name=".presentation.ui.NavAbout"
             android:exported="false" />
         <activity
-            android:name=".add_notes"
+            android:name=".AddNotes"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name=".UI.settings.nav_settings"
+            android:name=".presentation.ui.NavSettings"
             android:exported="false" />
     </application>
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_for_PrimaryVariant"
-    tools:context=".Fragments.sign_up">
+    tools:context=".presentation.fragments.SignUp">
 
     <ProgressBar
         android:id="@+id/progressBar"

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_for_PrimaryVariant"
-    tools:context= ".Fragments.loading_app">
+    tools:context= ".presentation.fragments.LoadingApp">
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieAnimationView"

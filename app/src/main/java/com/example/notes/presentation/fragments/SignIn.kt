@@ -1,4 +1,4 @@
-package com.example.notes.Fragments
+package com.example.notes.presentation.fragments
 
 import android.app.AlertDialog
 import androidx.fragment.app.Fragment
@@ -13,10 +13,11 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.notes.*
 import com.example.notes.databinding.SignInBinding
+import com.example.notes.presentation.ExitApp
 import com.google.firebase.auth.FirebaseAuth
 
 
-class sign_in() : Fragment(){
+class SignIn() : Fragment(){
 
     private lateinit var navController: NavController
     private lateinit var mAuth: FirebaseAuth

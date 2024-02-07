@@ -1,25 +1,24 @@
-package com.example.notes.Adaptor
+package com.example.notes.presentation.adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.notes.DataBase.EntityDataBase
-import com.example.notes.ListUser.NoteFirebase
+import com.example.notes.data.database.EntityDataBase
+import com.example.notes.data.databaseFirebase.NoteFirebase
 import com.example.notes.R
+import com.example.notes.domain.models.NotesDomain
 
 class NotesAdaptor(private val context: Context, val listener: NoteClickListener):
 
     RecyclerView.Adapter<NotesAdaptor.NoteViewHolder>() {
 
-    private val notesList = ArrayList<EntityDataBase>()
-    private val archivedNotesList = ArrayList<EntityDataBase>()
-    private val deleteNotesList = ArrayList<EntityDataBase>()
+    private val notesList = ArrayList<NotesDomain>()
+    private val archivedNotesList = ArrayList<NotesDomain>()
+    private val deleteNotesList = ArrayList<NotesDomain>()
 
     private var notesListFirebase: List<NoteFirebase> = emptyList()
     private var archivedNotesListFirebase: List<NoteFirebase> = emptyList()
@@ -31,14 +30,14 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
         isGuestUser = isGuest
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesAdaptor.NoteViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(
             LayoutInflater.from(context).inflate(R.layout.list_for_item, parent, false)
         )
     }
 
 
-    override fun onBindViewHolder(holder: NotesAdaptor.NoteViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         when{
             position < notesList.size && isGuestUser && !notesList[position].isArchived && !notesList[position].isDelete-> {
                 // Если заметка из локальной базы и пользователь гость
@@ -137,19 +136,19 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
         return maxOf(notesList.size,notesListFirebase.size,archivedNotesList.size,deleteNotesList.size,archivedNotesListFirebase.size,deleteNotesListFirebase.size)
     }
 
-    fun updateDeleteNotesList(newList: List<EntityDataBase>){
+    fun updateDeleteNotesList(newList: List<NotesDomain>){
         deleteNotesList.clear()
         deleteNotesList.addAll(newList)
         notifyDataSetChanged()
     }
 
-    fun updateArchivedNotesList(newList: List<EntityDataBase>){
+    fun updateArchivedNotesList(newList: List<NotesDomain>){
         archivedNotesList.clear()
         archivedNotesList.addAll(newList)
         notifyDataSetChanged()
     }
 
-    fun updateList(newList: List<EntityDataBase>) {
+    fun updateList(newList: List<NotesDomain>) {
         notesList.clear()
         notesList.addAll(newList)
         notifyDataSetChanged()
@@ -179,7 +178,7 @@ class NotesAdaptor(private val context: Context, val listener: NoteClickListener
 
 
     interface NoteClickListener {
-        fun onNoteClicked(note: EntityDataBase)
+        fun onNoteClicked(note: NotesDomain)
         fun onNoteClickedFirebase(note: NoteFirebase)
     }
 }
