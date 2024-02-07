@@ -21,7 +21,6 @@ class LoadingApp : Fragment() {
     lateinit var mAuth: FirebaseAuth
     private lateinit var navController: NavController
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,11 +30,8 @@ class LoadingApp : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         init(view)
-
         val isLogin: Boolean = mAuth.currentUser != null
-
         val handler = Handler(Looper.myLooper()!!)
         handler.postDelayed({
             if (isLogin) {

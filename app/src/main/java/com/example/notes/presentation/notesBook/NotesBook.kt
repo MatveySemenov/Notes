@@ -1,4 +1,4 @@
-package com.example.notes.presentation.notesViewModel
+package com.example.notes.presentation.notesBook
 
 import android.app.Activity
 import android.content.Intent
@@ -10,10 +10,8 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notes.presentation.adapters.NotesAdaptor
-import com.example.notes.data.database.NotesDataBase
 import com.example.notes.data.databaseFirebase.NoteFirebase
 import com.example.notes.presentation.addNotes.AddNotes
 import com.example.notes.databinding.NotesBookBinding
@@ -31,7 +29,6 @@ class NotesBook: Fragment(), NotesAdaptor.NoteClickListener {
     private lateinit var binding: NotesBookBinding
     private val viewModel: NotesViewModel by viewModels()
     private lateinit var adapter: NotesAdaptor
-
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -41,7 +38,6 @@ class NotesBook: Fragment(), NotesAdaptor.NoteClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initUI()
 
         adapter.setGuestUser(currentUser == null)
@@ -117,6 +113,9 @@ class NotesBook: Fragment(), NotesAdaptor.NoteClickListener {
                 }
             }
         }
+
+
+
 
     // для локальной
     override fun onNoteClicked(note: NotesDomain) {

@@ -25,6 +25,7 @@ class SignIn() : Fragment(){
     private lateinit var binding: SignInBinding
     private lateinit var progressBar: ProgressBar
     private lateinit var exitApp: ExitApp
+
     @Inject
     lateinit var mAuth:FirebaseAuth
 
@@ -50,13 +51,10 @@ class SignIn() : Fragment(){
             val userName = "Гость"
             val userEmail = "нет информации"
             appPreferences.saveUserData(userName,userEmail)
-            //Обновление UI
-            if(activity is UserDataChangeListener){
-                val userDataChangeListener = activity as UserDataChangeListener
-                userDataChangeListener.getUINavHeaderMain(userName, userEmail)
-            }
+            updateUIWithUserData(userName,userEmail)
             showGuestAlert()
         }
+
         //перейти к регистрации
         binding.registration.setOnClickListener {
             navController.navigate(R.id.action_sign_in_to_sign_up)
@@ -80,11 +78,7 @@ class SignIn() : Fragment(){
                         val userName = user.userName
                         val userEmail = user.userEmail
                         appPreferences.saveUserData(userName,userEmail)
-                        //Обновление UI
-                        if(activity is UserDataChangeListener){
-                            val userDataChangeListener = activity as UserDataChangeListener
-                            userDataChangeListener.getUINavHeaderMain(userName, userEmail)
-                        }
+                        updateUIWithUserData(userName, userEmail)
                     }
 
                 }
@@ -99,6 +93,14 @@ class SignIn() : Fragment(){
         }
     }
 
+    private fun updateUIWithUserData(userName: String?, userEmail: String?){
+        //Обновление UI
+        if(activity is UserDataChangeListener){
+            val userDataChangeListener = activity as UserDataChangeListener
+            userDataChangeListener.getUINavHeaderMain(userName, userEmail)
+        }
+    }
+
     private fun showGuestAlert(){
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Вход как гость")
@@ -109,9 +111,7 @@ class SignIn() : Fragment(){
             navController.navigate(R.id.action_sign_in_to_notes_book)
             dialog.dismiss()
         }
-        builder.setNegativeButton("Назад"){ _ , _ ->
-
-        }
+        builder.setNegativeButton("Назад"){ _ , _ -> }
         builder.show()
     }
     private fun Autentification(email: String, password: String){

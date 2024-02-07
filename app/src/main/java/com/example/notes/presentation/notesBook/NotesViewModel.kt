@@ -1,13 +1,10 @@
-package com.example.notes.presentation.notesViewModel
+package com.example.notes.presentation.notesBook
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.example.notes.data.FirebaseNotesRepositoryImpl
-import com.example.notes.data.NotesRepositoryImpl
 import com.example.notes.data.databaseFirebase.NoteFirebase
-import com.example.notes.data.database.NotesDataBase
 import com.example.notes.domain.models.NotesDomain
 import com.example.notes.domain.useCases.Local.DeleteFromDBUseCase
 import com.example.notes.domain.useCases.Local.GetAllNotesListUseCase

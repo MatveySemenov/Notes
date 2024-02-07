@@ -2,7 +2,6 @@ package com.example.notes.data.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.notes.data.database.EntityDataBase
 
 //Создание методов для взаимодействия с базой данных
 @Dao

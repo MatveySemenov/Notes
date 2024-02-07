@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/notes_book"
-        android:name="com.example.notes.presentation.notesViewModel.NotesBook"
+        android:name="com.example.notes.presentation.notesBook.NotesBook"
         android:label="Заметки"
         tools:layout="@layout/notes_book" >
         <action

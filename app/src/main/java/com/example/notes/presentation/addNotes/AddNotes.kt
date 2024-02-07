@@ -7,7 +7,6 @@ import android.view.*
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.notes.R
 import com.example.notes.data.databaseFirebase.NoteFirebase
 import com.example.notes.databinding.AddNotesBinding
@@ -26,7 +25,6 @@ class AddNotes : AppCompatActivity(){
     private var isUpdate = false
     private var isArchived: Boolean = false
     private var isDelete: Boolean = false
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +55,6 @@ class AddNotes : AppCompatActivity(){
 
         if (isUpdate){
             binding.imgDelete.visibility = View.VISIBLE
-
             if (isDelete){
                 binding.imgCheck.visibility = View.GONE
                 binding.imgArchive.visibility = View.GONE
@@ -67,7 +64,6 @@ class AddNotes : AppCompatActivity(){
                 binding.imgDelete.setImageResource(R.drawable.delete)
                 binding.imgRestoreDelete?.visibility = View.INVISIBLE
             }
-
         } else{
             binding.imgDelete.visibility = View.INVISIBLE
             binding.imgRestoreDelete?.visibility = View.INVISIBLE

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.notes.data.database.EntityDataBase
 import com.example.notes.data.databaseFirebase.NoteFirebase
 import com.example.notes.R
 import com.example.notes.domain.models.NotesDomain

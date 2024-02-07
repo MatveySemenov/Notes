@@ -10,10 +10,9 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.notes.presentation.adapters.NotesAdaptor
-import com.example.notes.presentation.notesViewModel.NotesViewModel
+import com.example.notes.presentation.notesBook.NotesViewModel
 import com.example.notes.data.databaseFirebase.NoteFirebase
 import com.example.notes.presentation.addNotes.AddNotes
 import com.example.notes.databinding.NavArchivesBinding
